@@ -113,9 +113,10 @@ background-color: #f2f2f2;
 </style>
 </head>
 <body>
+
 <h1>Complete Guide to Configure VS Code for Python and AI Agent Development</h1>
-<p><strong>Author:</strong> Stephen Hope | <strong>Version:</strong> 3.0 - August 2025</p>
-<p>This comprehensive guide helps you set up Visual Studio Code for building AI agents using Python and frameworks like LangChain, CrewAI, AutoGen, and LlamaIndex. Updated with current package versions and compatibility fixes for August 2025.</p>
+<p><strong>Author:</strong>Stephen Hope| <strong>Version:</strong> 3.0 - August 2025</p>
+<p>This comprehensive guide helps you set up <a href="https://code.visualstudio.com/">Visual Studio Code</a> for building AI agents using <a href="https://www.python.org/">Python</a> and frameworks like <a href="https://www.langchain.com/">LangChain</a>, <a href="https://crewai.com/">CrewAI</a>, <a href="https://microsoft.github.io/autogen/">AutoGen</a>, and <a href="https://www.llamaindex.ai/">LlamaIndex</a>. Updated with current package versions and compatibility fixes for August 2025.</p>
 
 <div class="critical">
 <h2>🚨 CRITICAL UPDATES IN VERSION 3.0</h2>
@@ -133,8 +134,8 @@ background-color: #f2f2f2;
 <h2>🚀 Quick Start (30 minutes)</h2>
 <p><strong>For users who want to get up and running quickly:</strong></p>
 <ol>
-    <li><strong>Install basics</strong>: Download VS Code and Python 3.12 from official sites</li>
-    <li><strong>Create project</strong>: Make a folder, open in VS Code, install Python extension</li>
+    <li><strong>Install basics</strong>: Download <a href="https://code.visualstudio.com/download">VS Code</a> and <a href="https://www.python.org/downloads/">Python 3.12</a> from official sites</li>
+    <li><strong>Create project</strong>: Make a folder, open in VS Code, install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python extension</a></li>
     <li><strong>Set up environment</strong>: Use Command Palette → "Python: Create Environment" → Venv</li>
     <li><strong>Install essentials</strong>: <code>pip install openai python-dotenv langchain langchain-openai</code></li>
     <li><strong>Add API key</strong>: Create <code>.env</code> file with <code>OPENAI_API_KEY=your_key_here</code></li>
@@ -152,7 +153,7 @@ background-color: #f2f2f2;
 </ul>
 <p><strong>Total Setup Time</strong>: ~2–3 hours (including advanced sections) | <strong>Quick Start Time</strong>: ~30 minutes</p>
 <div class="warning">
-    <p><strong>Cost Considerations:</strong> This guide includes steps that use services like the OpenAI API and GitHub Copilot, which may incur costs. We also provide free, local alternatives like Ollama where possible. Always monitor your usage and billing on provider dashboards.</p>
+    <p><strong>Cost Considerations:</strong> This guide includes steps that use services like the <a href="https://openai.com/api/">OpenAI API</a> and <a href="https://github.com/features/copilot">GitHub Copilot</a>, which may incur costs. We also provide free, local alternatives like <a href="https://ollama.com/">Ollama</a> where possible. Always monitor your usage and billing on provider dashboards.</p>
 </div>
 
 <div class="warning">
@@ -186,7 +187,7 @@ background-color: #f2f2f2;
     <h2>1. Install VS Code and Prerequisites (Beginner)</h2>
     <h3>1.1 Install VS Code</h3>
     <ul>
-        <li><strong>Download</strong>: Get the stable version from <a href="https://code.visualstudio.com">code.visualstudio.com</a>.</li>
+        <li><strong>Download</strong>: Get the stable version from <a href="https://code.visualstudio.com/download">code.visualstudio.com</a>.</li>
         <li><strong>Install</strong>: Follow prompts for your OS (Windows, macOS, or Linux).</li>
         <li><strong>Verify</strong>: Open VS Code and confirm it launches.</li>
     </ul>
@@ -217,7 +218,7 @@ background-color: #f2f2f2;
                 <td>3.13.5</td>
                 <td>⚠️ Limited AI support</td>
                 <td>🟡 Wait for AI ecosystem</td>
-                <td>TensorFlow, some packages still unsupported</td>
+                <td><a href="https://www.tensorflow.org/">TensorFlow</a>, some packages still unsupported</td>
             </tr>
         </table>
     </div>
@@ -226,9 +227,9 @@ background-color: #f2f2f2;
         <li><strong>Installation Setup</strong>:
             <ul>
                 <li><strong>Windows</strong>: Check "Add Python to PATH" during installation. After installation, open a *new* terminal window to verify.</li>
-                <li><strong>macOS</strong>: Use Homebrew: <code>brew install python@3.12</code>. For Apple Silicon (M1/M2/M3), ensure Rosetta 2 is installed (<code>softwareupdate --install-rosetta</code>) for compatibility with some packages.</li>
-                <li><strong>Linux</strong>: Use system package manager or <code>pyenv</code> for version management (e.g., <code>pyenv install 3.12.7</code>).</li>
-                <li><strong>Cross-Platform Note</strong>: For Windows users, consider using Windows Subsystem for Linux (WSL) for a more consistent, Linux-aligned development experience, which simplifies Docker usage and package management.</li>
+                <li><strong>macOS</strong>: Use <a href="https://brew.sh/">Homebrew</a>: <code>brew install python@3.12</code>. For Apple Silicon (M1/M2/M3), ensure Rosetta 2 is installed (<code>softwareupdate --install-rosetta</code>) for compatibility with some packages.</li>
+                <li><strong>Linux</strong>: Use system package manager or <a href="https://github.com/pyenv/pyenv"><code>pyenv</code></a> for version management (e.g., <code>pyenv install 3.12.7</code>).</li>
+                <li><strong>Cross-Platform Note</strong>: For Windows users, consider using <a href="https://learn.microsoft.com/en-us/windows/wsl/install">Windows Subsystem for Linux (WSL)</a> for a more consistent, Linux-aligned development experience, which simplifies Docker usage and package management.</li>
             </ul>
         </li>
         <li><strong>Verify Installation</strong>:
@@ -242,7 +243,7 @@ python3 --version
 
     <h3>1.3 Install Git</h3>
     <ul>
-        <li><strong>Download</strong>: Install Git from <a href="https://git-scm.com">git-scm.com</a>.</li>
+        <li><strong>Download</strong>: Install Git from <a href="https://git-scm.com/downloads">git-scm.com</a>.</li>
         <li><strong>Configure</strong>: Set up your name and email:
             <pre><code>git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"</code></pre>
@@ -256,7 +257,7 @@ git config --global user.email "your.email@example.com"</code></pre>
     <h3>2.1 Install the Python Extension</h3>
     <ul>
         <li>Open Extensions view (Ctrl+Shift+X / Cmd+Shift+X).</li>
-        <li>Search for <strong>Python</strong> (by Microsoft, ID: <code>ms-python.python</code>) and install.</li>
+        <li>Search for <strong><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python</a></strong> (by Microsoft, ID: <code>ms-python.python</code>) and install.</li>
         <li><strong>Features</strong>: Code completion (via Pylance), linting, debugging, Jupyter support.</li>
         <li><strong>Note</strong>: Restart VS Code after installation to ensure all features load correctly.</li>
     </ul>
@@ -272,7 +273,7 @@ git config --global user.email "your.email@example.com"</code></pre>
 
 <div class="section" id="section3">
     <h2>3. Virtual Environment Setup (Beginner)</h2>
-    <p><strong>Critical</strong>: Always use virtual environments to avoid dependency conflicts. We will use the standard name <code>.venv</code> for our environment.</p>
+    <p><strong>Critical</strong>: Always use <a href="https://docs.python.org/3/library/venv.html">virtual environments</a> to avoid dependency conflicts. We will use the standard name <code>.venv</code> for our environment.</p>
 
     <h3>3.1 Create a Virtual Environment</h3>
     <p>Choose one method based on your preference:</p>
@@ -317,13 +318,13 @@ which python</code></pre>
     <h2>4. AI-Specific Extensions & Tools (Beginner)</h2>
     <p>Install these from the VS Code marketplace:</p>
     <ul>
-        <li><strong>Jupyter</strong> (<code>ms-toolsai.jupyter</code>): For notebook development and prototyping.</li>
-        <li><strong>GitHub Copilot</strong> (<code>GitHub.copilot</code>): AI-powered code completion. Requires a subscription.</li>
-        <li><strong>Python Docstring Generator</strong> (<code>njpwerner.autodocstring</code>): Auto-generate documentation.</li>
-        <li><strong>Black Formatter</strong> (<code>ms-python.black-formatter</code>): Code formatting.</li>
-        <li><strong>isort</strong> (<code>ms-python.isort</code>): Import sorting.</li>
-        <li><strong>Pylint</strong> (<code>ms-python.pylint</code>): Advanced linting.</li>
-        <li><strong>Error Lens</strong> (<code>usernamehw.errorlens</code>): Highlights errors/warnings in-line.</li>
+        <li><strong><a href="https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter">Jupyter</a></strong> (<code>ms-toolsai.jupyter</code>): For notebook development and prototyping.</li>
+        <li><strong><a href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot">GitHub Copilot</a></strong> (<code>GitHub.copilot</code>): AI-powered code completion. Requires a subscription.</li>
+        <li><strong><a href="https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring">Python Docstring Generator</a></strong> (<code>njpwerner.autodocstring</code>): Auto-generate documentation.</li>
+        <li><strong><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter">Black Formatter</a></strong> (<code>ms-python.black-formatter</code>): Code formatting.</li>
+        <li><strong><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.isort">isort</a></strong> (<code>ms-python.isort</code>): Import sorting.</li>
+        <li><strong><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.pylint">Pylint</a></strong> (<code>ms-python.pylint</code>): Advanced linting.</li>
+        <li><strong><a href="https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens">Error Lens</a></strong> (<code>usernamehw.errorlens</code>): Highlights errors/warnings in-line.</li>
     </ul>
     <p class="note"><strong>Note</strong>: Ensure <code>ipykernel</code> is installed in your virtual environment for Jupyter support (<code>pip install ipykernel</code>).</p>
 </div>
@@ -341,11 +342,10 @@ which python</code></pre>
     <p>This method is straightforward. You install packages manually and then save a list of all dependencies.</p>
     <ol>
         <li><strong>Install Packages:</strong> Run the following commands to install the core libraries.
-            <pre><code># Update pip first
-pip install --upgrade pip
+            <pre><code>pip install --upgrade pip
 
 # Core AI/ML and Data Science (Updated August 2025)
-pip install numpy==2.3.2 pandas==2.3.1 scikit-learn==1.5.2 
+pip install numpy==2.3.2 pandas==2.3.1 scikit-learn==1.5.2
 
 # NOTE: pip-tools does not support --index-url per line.
 #       Install torch separately after pip-sync, or use a constraints file.
@@ -379,7 +379,7 @@ pip install safety==3.2.11 pip-audit==2.8.0</code></pre>
     <h3>Path B: Advanced Method (`pip-tools`)</h3>
     <p>This is the recommended best practice for cleaner, more maintainable projects. You define only your direct dependencies, and <code>pip-tools</code> resolves and pins the sub-dependencies.</p>
     <ol>
-        <li><strong>Install pip-tools</strong>: <code>pip install pip-tools==7.5.0</code></li>
+        <li><strong>Install pip-tools</strong>: <code>pip install <a href="https://pypi.org/project/pip-tools/">pip-tools</a>==7.5.0</code></li>
         <li><strong>Create <code>requirements.in</code></strong>: Manually create this file and list only your top-level dependencies.
             <pre><code># requirements.in - Updated August 2025
 # Core
@@ -474,15 +474,15 @@ pip install torch==2.7.0 --index-url https://download.pytorch.org/whl/cu128</cod
 
     <h3>6.1 Prerequisites</h3>
     <ul>
-        <li><strong>Hardware</strong>: An NVIDIA GPU (e.g., RTX 3060, 4080, or higher). AMD GPUs are not supported for CUDA-based workflows.</li>
+        <li><strong>Hardware</strong>: An <a href="https://www.nvidia.com/en-us/geforce/graphics-cards/">NVIDIA GPU</a> (e.g., RTX 3060, 4080, or higher). AMD GPUs are not supported for CUDA-based workflows.</li>
         <li><strong>OS</strong>: Windows, Linux, or WSL2 on Windows. macOS does not support CUDA.</li>
-        <li><strong>NVIDIA Driver</strong>: Ensure you have the latest NVIDIA drivers installed *before* installing the CUDA toolkit.</li>
+        <li><strong>NVIDIA Driver</strong>: Ensure you have the latest <a href="https://www.nvidia.com/download/index.aspx">NVIDIA drivers</a> installed *before* installing the CUDA toolkit.</li>
     </ul>
 
     <h3>6.2 Install CUDA Toolkit and cuDNN</h3>
     <ol>
-        <li><strong>Check Required CUDA Version</strong>: PyTorch 2.7.0 supports CUDA 12.6 and 12.8. CUDA 12.8 is recommended for Blackwell GPU architecture support.</li>
-        <li><strong>Download CUDA Toolkit</strong>: Visit <a href="https://developer.nvidia.com/cuda-toolkit">NVIDIA CUDA Toolkit</a>, select version 12.8, and follow installation prompts.</li>
+        <li><strong>Check Required CUDA Version</strong>: <a href="https://pytorch.org/get-started/locally/">PyTorch 2.7.0</a> supports CUDA 12.6 and 12.8. CUDA 12.8 is recommended for Blackwell GPU architecture support.</li>
+        <li><strong>Download CUDA Toolkit</strong>: Visit <a href="https://developer.nvidia.com/cuda-toolkit-archive">NVIDIA CUDA Toolkit Archive</a>, select version 12.8, and follow installation prompts.</li>
         <li><strong>Install cuDNN</strong>: Visit <a href="https://developer.nvidia.com/cudnn">NVIDIA cuDNN</a>, download the version compatible with your CUDA Toolkit, and follow NVIDIA's instructions to copy the files.</li>
         <li><strong>Verify Installation</strong>:
             <pre><code># Check CUDA version
@@ -500,7 +500,7 @@ pip install torch==2.7.0 torchvision==0.22.0 torchaudio==2.7.0 --index-url https
 pip install torch==2.7.0 torchvision==0.22.0 torchaudio==2.7.0 --index-url https://download.pytorch.org/whl/cu126
 </code></pre>
     <p class="note"><strong>pip-tools Note:</strong> If you use <code>pip-tools</code> for dependency management, install PyTorch with CUDA manually after syncing other dependencies, as <code>pip-tools</code> does not support <code>--index-url</code> per line.</p>
-    <p class="note"><strong>Apple Silicon Note</strong>: For macOS with M1/M2/M3, use PyTorch's native Metal Performance Shaders (MPS). The standard <code>pip install torch==2.7.0</code> will include MPS support. Check for availability with <code>torch.backends.mps.is_available()</code>.</p>
+    <p class="note"><strong>Apple Silicon Note</strong>: For macOS with M1/M2/M3, use PyTorch's native <a href="https://developer.apple.com/metal/pytorch/">Metal Performance Shaders (MPS)</a>. The standard <code>pip install torch==2.7.0</code> will include MPS support. Check for availability with <code>torch.backends.mps.is_available()</code>.</p>
 
     <h3>6.4 Verify GPU Setup</h3>
     <p>Create a test script (<code>test_gpu.py</code>):</p>
@@ -528,15 +528,15 @@ else:
 ├── .vscode/          # VS Code settings
 ├── .env              # Environment variables
 ├── .env.example      # Template for env variables
-├── .gitignore        # Git ignore file
+├── .gitignore        # <a href="https://git-scm.com/docs/gitignore">Git ignore file</a>
 ├── requirements.txt  # Python dependencies (generated)
 ├── requirements.in   # Top-level dependencies (if using pip-tools)
-├── README.md         # Project documentation
-├── pyproject.toml    # Project configuration (for linters, formatters, etc.)
+├── README.md         # <a href="https://www.makeareadme.com/">Project documentation</a>
+├── pyproject.toml    # <a href="https://pip.pypa.io/en/stable/reference/build-system/pyproject-toml/">Project configuration (for linters, formatters, etc.)</a>
 ├── src/              # Source code
 │   └── ...
-├── notebooks/        # Jupyter notebooks
-└── tests/            # Unit tests</code></pre>
+├── notebooks/        # <a href="https://jupyter.org/">Jupyter notebooks</a>
+└── tests/            # <a href="https://docs.pytest.org/en/latest/">Unit tests</a></code></pre>
 
     <h3>Create .gitignore</h3>
     <p>A good starting point can be generated from <a href="https://www.toptal.com/developers/gitignore">gitignore.io</a> using terms like: `Python`, `VisualStudioCode`, `venv`.</p>
@@ -544,7 +544,7 @@ else:
 
 <div class="section" id="section8">
     <h2>8. Debugging Configuration (Intermediate)</h2>
-    <p>Create <code>.vscode/launch.json</code>:</p>
+    <p>Create <code><a href="https://code.visualstudio.com/docs/editor/debugging#_launch-configurations">.vscode/launch.json</a></code>:</p>
     <pre><code>{
     "version": "0.2.0",
     "configurations": [
@@ -566,7 +566,7 @@ else:
         }
     ]
 }</code></pre>
-    <p>Create <code>.vscode/settings.json</code>:</p>
+    <p>Create <code><a href="https://code.visualstudio.com/docs/getstarted/settings">.vscode/settings.json</a></code>:</p>
     <pre><code>{
     "python.defaultInterpreterPath": "./.venv/bin/python",
     "python.formatting.provider": "black",
@@ -587,6 +587,7 @@ ANTHROPIC_API_KEY=your_anthropic_api_key_here</code></pre>
 import os
 from dotenv import load_dotenv
 
+# Uses the python-dotenv library: https://pypi.org/project/python-dotenv/
 load_dotenv()
 openai_key = os.getenv("OPENAI_API_KEY")</code></pre>
 </div>
@@ -699,8 +700,8 @@ if __name__ == "__main__":
 
     <h3>11.3 Using a Local Model (Ollama)</h3>
     <ol>
-        <li>Install Ollama from <a href="https://ollama.com">ollama.com</a>.</li>
-        <li>Pull a model: <code>ollama pull llama3.1</code> (or a smaller model like <code>phi3</code>).</li>
+        <li>Install Ollama from <a href="https://ollama.com/download">ollama.com</a>.</li>
+        <li>Pull a model: <code>ollama pull llama3.1</code> (or a smaller model like <code>phi3</code>). See the <a href="https://ollama.com/library">Ollama model library</a> for more options.</li>
         <li>Create <code>src/hello_agent_local.py</code>:</li>
     </ol>
     <pre><code>import ollama
@@ -725,8 +726,8 @@ if __name__ == "__main__":
 
 <div class="section" id="section12">
     <h2>12. Docker & Containerization (Intermediate)</h2>
-    <p>Create a <code>Dockerfile</code> to package your application.</p>
-    <pre><code># Use Python 3.12 slim image
+    <p>Create a <code><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile</a></code> to package your application.</p>
+    <pre><code># Use Python 3.12 slim image from Docker Hub
 FROM python:3.12-slim
 
 WORKDIR /app
@@ -754,8 +755,8 @@ docker run -p 8000:8000 --env-file .env my-ai-agent</code></pre>
 
 <div class="section" id="section13">
     <h2>13. Experiment Tracking & MLOps (Intermediate)</h2>
-    <p>Use MLflow to track experiments.</p>
-    <pre><code>pip install mlflow==2.19.0
+    <p>Use <a href="https://mlflow.org/">MLflow</a> to track experiments.</p>
+    <pre><code>pip install <a href="https://pypi.org/project/mlflow/">mlflow</a>==2.19.0
 mlflow ui # Access at http://localhost:5000</code></pre>
     <pre><code># Example: track_experiment.py
 import mlflow
@@ -776,13 +777,13 @@ with mlflow.start_run():
     
     # Log response details if available
     mlflow.log_text(response.content, "response.txt")
-    if hasattr(response, 'usage_metadata'):
+    if hasattr(response, 'usage_metadata') and response.usage_metadata:
         mlflow.log_metric("tokens_used", response.usage_metadata.get('total_tokens', 0))</code></pre>
 </div>
 
 <div class="section" id="section14">
     <h2>14. FastAPI for Model Serving (Intermediate)</h2>
-    <p>Create <code>src/main.py</code> to build a production-ready API.</p>
+    <p>Create <code>src/main.py</code> to build a production-ready API using <a href="https://fastapi.tiangolo.com/">FastAPI</a>.</p>
     <pre><code>from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from langchain_openai import ChatOpenAI
@@ -824,7 +825,7 @@ async def predict(request: PredictionRequest):
 async def health_check():
     return {"status": "healthy", "message": "AI Agent Server is running"}</code></pre>
     <p>Run the development server:</p>
-    <pre><code>pip install fastapi==0.115.6 uvicorn==0.32.1
+    <pre><code>pip install <a href="https://pypi.org/project/fastapi/">fastapi</a>==0.115.6 <a href="https://pypi.org/project/uvicorn/">uvicorn</a>==0.32.1
 uvicorn src.main:app --reload --port 8000</code></pre>
     <p class="note">Navigate to <code>http://localhost:8000/docs</code> to see interactive API documentation.</p>
     <p class="note"><strong>Production Note:</strong> For production, consider adding request timeouts, rate limiting, and authentication to your FastAPI endpoints. See <a href="https://fastapi.tiangolo.com/advanced/security/">FastAPI Security</a> for best practices.</p>
@@ -832,7 +833,7 @@ uvicorn src.main:app --reload --port 8000</code></pre>
 
 <div class="section" id="section15">
     <h2>15. Advanced Vector Database Setup (Intermediate)</h2>
-    <p>Use ChromaDB for local RAG development.</p>
+    <p>Use <a href="https://www.trychroma.com/">ChromaDB</a> for local RAG development.</p>
     <pre><code># Updated ChromaDB example for v0.5.x
 import chromadb
 
@@ -894,8 +895,8 @@ print(result)</code></pre>
 
 <div class="section" id="section16">
     <h2>16. Code Quality Automation (Intermediate)</h2>
-    <p>Use <code>pre-commit</code> to run checks before every commit.</p>
-    <pre><code>pip install pre-commit==4.0.1
+    <p>Use <code><a href="https://pre-commit.com/">pre-commit</a></code> to run checks before every commit.</p>
+    <pre><code>pip install <a href="https://pypi.org/project/pre-commit/">pre-commit</a>==4.0.1
 pre-commit install</code></pre>
     <p>Create <code>.pre-commit-config.yaml</code>:</p>
     <pre><code>repos:
@@ -932,12 +933,12 @@ pre-commit install</code></pre>
             <tr>
                 <td>Create multi-agent systems</td>
                 <td>CrewAI Workflows, AutoGen Group Chats</td>
-                <td><a href="https://docs.crewai.com">CrewAI Documentation</a></td>
+                <td><a href="https://docs.crewai.com/">CrewAI Documentation</a></td>
             </tr>
             <tr>
                 <td>Build document Q&A systems</td>
                 <td>Advanced RAG, LlamaIndex Pipelines</td>
-                <td><a href="https://docs.llamaindex.ai">LlamaIndex Docs</a></td>
+                <td><a href="https://docs.llamaindex.ai/">LlamaIndex Docs</a></td>
             </tr>
         </table>
     </div>
@@ -960,7 +961,7 @@ pre-commit install</code></pre>
     <h3>18.2 LangChain Migration Issues</h3>
     <p>If upgrading from older LangChain versions:</p>
     <pre><code># Use the migration CLI tool
-pip install langchain-cli
+pip install <a href="https://pypi.org/project/langchain-cli/">langchain-cli</a>
 langchain-cli migrate --diff [path to code]  # Preview changes
 langchain-cli migrate [path to code]         # Apply changes</code></pre>
     
@@ -1032,8 +1033,6 @@ which python</code></pre>
         </li>
     </ul>
 </div>
-<script data-goatcounter="https://sbhsagent.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
 
 </body>
 </html>
