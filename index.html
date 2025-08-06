@@ -609,7 +609,7 @@ else:
 
         <article class="section" id="section7">
             <h2>7. Project Structure & Best Practices (Beginner)</h2>
-            <h3>Structure</h3>
+            <h3>7.1 Structure</h3>
             <pre><code>my-ai-agent/
 ├── .venv/            # Virtual environment
 ├── .vscode/          # VS Code settings
@@ -625,9 +625,39 @@ else:
 ├── notebooks/        # Jupyter notebooks
 └── tests/            # Unit tests</code></pre>
 
-            <h3>Create .gitignore</h3>
+            <h3>7.2 Create .gitignore</h3>
             <p>A good starting point can be generated from <a href="https://www.toptal.com/developers/gitignore">gitignore.io</a> using terms like: `Python`, `VisualStudioCode`, `venv`.</p>
-        </article>
+
+            <h3>7.3 Centralizing Tool Configuration (`pyproject.toml`)</h3>
+            <p>
+                For consistent code quality across your project and team members, it's best practice to
+                configure tools like Black (formatter), isort (import sorter), and Ruff (linter/formatter)
+                in <code>pyproject.toml</code> rather than editor-specific settings. This ensures your project's
+                code style is enforced uniformly, regardless of the IDE used.
+            </p>
+            <p>Create or update your <code>pyproject.toml</code> file with the following:</p>
+            <pre><code># pyproject.toml
+
+[tool.black]
+line-length = 88
+target-version = ['py312'] # Or your Python version
+
+[tool.isort]
+profile = "black" # Ensures compatibility with Black's formatting
+line_length = 88
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "W", "I", "UP", "C"] # Common linting rules (Error, Flake8, Warning, Isort, PyUpgrade, Complexity)
+ignore = ["E501"] # Example: Ignore line length if Black handles it
+target-version = "py312" # Or your Python version
+</code></pre>
+            <p class="note">
+                <strong>Why this is important:</strong> When these configurations are in <code>pyproject.toml</code>,
+                VS Code (via its Python extension) and other tools like pre-commit hooks will
+                automatically pick them up, making your project's code quality standards portable.
+            </p>
+        </article>     
 
         <article class="section" id="section8">
             <h2>8. Debugging Configuration (Intermediate)</h2>
@@ -661,6 +691,12 @@ else:
     "python.linting.pylintEnabled": true,
     "python.testing.pytestEnabled": true
 }</code></pre>
+            <p class="note">
+                <strong>Note on settings:</strong> While <code>pyproject.toml</code> centrally configures the behavior of
+                tools like Black and Ruff, these <code>.vscode/settings.json</code> lines tell VS Code to
+                actually *use* those tools and enable editor-specific features like "format on save"
+                and test discovery.
+            </p>
         </article>
 
         <article class="section" id="section9">
@@ -870,10 +906,18 @@ with mlflow.start_run():
         <article class="section" id="section14">
             <h2>14. FastAPI for Model Serving (Intermediate)</h2>
             <p>Create <code>src/main.py</code> to build a production-ready API.</p>
-            <pre><code>from fastapi import FastAPI, HTTPException, Request
+            <pre><code>import os
+from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException, Request
+from pydantic import BaseModel
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
+
+# Load environment variables first
+load_dotenv()
 
 # Initialize rate limiter
 limiter = Limiter(key_func=get_remote_address)
@@ -881,42 +925,63 @@ app = FastAPI(title="AI Agent Server", version="1.0.0")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+# --- State object to hold the model ---
+class AppState:
+    llm = None
+
+# --- Pydantic model for request body ---
 class PredictionRequest(BaseModel):
     prompt: str
     model: str = "gpt-4o-mini"
     temperature: float = 0.5
 
-# Initialize with error handling
-try:
-    llm = ChatOpenAI(model="gpt-4o-mini")
-except Exception as e:
-    print(f"Warning: Could not initialize OpenAI client: {e}")
-    llm = None
+# --- App startup event to initialize the model ---
+@app.on_event("startup")
+async def startup_event():
+    # Initialize with error handling
+    if not os.getenv("OPENAI_API_KEY"):
+        print("🔴 CRITICAL: OPENAI_API_KEY is not set. The /predict endpoint will not work.")
+        AppState.llm = None
+    else:
+        try:
+            AppState.llm = ChatOpenAI(model="gpt-4o-mini")
+            print("✅ OpenAI client initialized successfully.")
+        except Exception as e:
+            print(f"🔴 CRITICAL: Could not initialize OpenAI client: {e}")
+            AppState.llm = None
 
+# --- API Endpoints ---
 @app.post("/predict")
 @limiter.limit("5/minute")  # Limit to 5 requests per minute per IP
 async def predict(request: PredictionRequest, req: Request):
-    if not llm:
-        raise HTTPException(status_code=500, detail="AI model not available")
-    
-    if not os.getenv("OPENAI_API_KEY"):
-        raise HTTPException(status_code=500, detail="OpenAI API key not configured")
+    if AppState.llm is None:
+        raise HTTPException(
+            status_code=503, 
+            detail="AI model is not available. Check server logs for initialization errors."
+        )
     
     try:
         messages = [HumanMessage(content=request.prompt)]
-        response = llm.invoke(messages)
+        # Use the model instance from the app state
+        response = AppState.llm.invoke(messages)
         return {"response": response.content}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        # Catch potential API errors during invocation
+        raise HTTPException(status_code=500, detail=f"An error occurred while processing the request: {e}")
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "message": "AI Agent Server is running"}</code></pre>
+    health_status = {
+        "status": "healthy",
+        "message": "AI Agent Server is running",
+        "model_initialized": AppState.llm is not None
+    }
+    return health_status</code></pre>
             <p>Run the development server:</p>
-            <pre><code>pip install fastapi==0.115.6 uvicorn==0.32.1
+            <pre><code>pip install fastapi==0.115.6 uvicorn==0.32.1 pydantic==2.10.1 slowapi==0.1.9
 uvicorn src.main:app --reload --port 8000</code></pre>
             <p class="note">Navigate to <code>http://localhost:8000/docs</code> to see interactive API documentation.</p>
-            <p class="note"><strong>Production Note:</strong> For production, consider adding request timeouts, rate limiting, and authentication to your FastAPI endpoints. See <a href="https://fastapi.tiangolo.com/advanced/security/">FastAPI Security</a> for best practices.</p>
+            <p class="note"><strong>Production Note:</strong> For production, consider adding request timeouts and authentication to your FastAPI endpoints. See <a href="https://fastapi.tiangolo.com/advanced/security/">FastAPI Security</a> for best practices.</p>
         </article>
 
         <article class="section" id="section15">
