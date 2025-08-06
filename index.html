@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,312 +9,584 @@
     <meta name="last-updated" content="2025-08-05">
 
     <title>Complete Guide to Configure VS Code for Python and AI Agent Development</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            color: #333;
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+            --light-gray: #f8f9fa;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
         }
-        h1, h2, h3 {
-            color: #2c3e50;
-        }
-        h1 {
-            font-size: 2em;
-            border-bottom: 2px solid #2c3e50;
-            padding-bottom: 10px;
-        }
-        h2 {
-            font-size: 1.5em;
-            margin-top: 20px;
-        }
-        h3 {
-            font-size: 1.2em;
-            margin-top: 15px;
-        }
-        code {
-            background: #f4f4f4;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        pre {
+       
+        * {
+            box-sizing: border-box;
             margin: 0;
-            background: transparent;
+            padding: 0;
         }
-        code {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9em;
+       
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        ul, ol {
-            margin: 10px 0;
-            padding-left: 20px;
+       
+        h1, h2, h3, h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
         }
-        li {
-            margin-bottom: 5px;
+       
+        h1 {
+            font-size: 2.5rem;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+            margin-top: 1.5rem;
         }
+       
+        h2 {
+            font-size: 2rem;
+            margin-top: 2.5rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+        }
+       
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            color: var(--secondary);
+        }
+       
+        h4 {
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            color: #555;
+        }
+       
+        p {
+            margin-bottom: 1rem;
+        }
+       
         a {
-            color: #007bff;
+            color: var(--secondary);
             text-decoration: none;
+            transition: var(--transition);
         }
+       
         a:hover {
+            color: var(--primary);
             text-decoration: underline;
         }
+       
+        code {
+            background: var(--light-gray);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.95em;
+        }
+       
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 1.2rem 0;
+            line-height: 1.5;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.95em;
+        }
+       
+        pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+       
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.8rem;
+        }
+       
+        li {
+            margin-bottom: 0.6rem;
+        }
+       
+        .container {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+       
+        .sidebar {
+            flex: 0 0 280px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+       
+        .content {
+            flex: 1;
+        }
+       
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.8rem;
+            margin-bottom: 1.8rem;
+        }
+       
+        .note, .warning, .critical, .quick-start {
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            margin: 1.2rem 0;
+            border-left: 5px solid;
+        }
+       
         .note {
-            background: #e7f3fe;
-            border-left: 4px solid #2196F3;
-            padding: 10px;
-            margin: 10px 0;
+            background-color: #e7f3fe;
+            border-color: #2196F3;
         }
+       
         .warning {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 10px;
-            margin: 10px 0;
+            background-color: #fff3cd;
+            border-color: #ffc107;
         }
+       
         .critical {
-            background: #f8d7da;
-            border-left: 4px solid #dc3545;
-            padding: 10px;
-            margin: 10px 0;
+            background-color: #f8d7da;
+            border-color: #dc3545;
         }
+       
         .quick-start {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 4px;
+            background-color: #d4edda;
+            border-color: #28a745;
         }
+       
         .section {
-            margin-bottom: 20px;
+            margin-bottom: 2rem;
         }
-        .framework-comparison {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            padding: 15px;
-            margin: 15px 0;
+       
+        .version-matrix, .framework-comparison {
+            background: var(--light-gray);
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 1.2rem;
+            margin: 1.2rem 0;
         }
-        .version-matrix {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            padding: 15px;
-            margin: 15px 0;
-        }
+       
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 10px 0;
+            margin: 1rem 0;
         }
+       
         th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 0.8rem;
             text-align: left;
         }
+       
         th {
             background-color: #f2f2f2;
+            font-weight: 600;
         }
-        .version-matrix {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-        }
-        .version-matrix table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .version-matrix th, .version-matrix td {
-            padding: 8px;
-            border: 1px solid #ddd;
-        }
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: #2c3e50;
-            color: white;
-            padding: 8px;
-            z-index: 100;
-            transition: top 0.2s;
-        }
-
-        .skip-link:focus {
-            top: 0;
-            outline: 2px solid #007bff;
-        }
-
-        /* Semantic element styles */
-        header {
-            margin-bottom: 2rem;
-        }
-
-        nav {
-            margin: 2rem 0;
-        }
-
-        main {
-            margin: 2rem 0;
-        }
-
-        article {
-            margin-bottom: 3rem;
-        }
-
-        footer {
-            margin-top: 3rem;
-            padding-top: 1rem;
-            border-top: 1px solid #ddd;
-        }
-
-        /* Code block styling */
+       
         .code-container {
             position: relative;
-            margin: 1rem 0;
-            background: #f4f4f4;
-            border-radius: 4px;
+            margin: 1.2rem 0;
+            background: #2d2d2d;
+            border-radius: var(--border-radius);
             overflow: hidden;
         }
-
+       
         .code-block {
-            padding: 1rem 1rem 1rem 3.8em;
-            margin: 0;
-            font-family: 'Courier New', Courier, monospace;
+            padding: 1.2rem;
+            font-family: 'Fira Code', 'Consolas', monospace;
             line-height: 1.5;
             overflow-x: auto;
-            counter-reset: line;
+            color: #f8f8f2;
         }
-
-        /* Line numbers */
-        .code-block.line-numbers {
-            position: relative;
-        }
-
-        .code-block.line-numbers > code {
-            display: block;
-            padding-left: 3.8em;
-        }
-
-        .code-block.line-numbers > code::before {
-            content: counter(line);
-            counter-increment: line;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 2.5em;
-            text-align: right;
-            color: #888;
-            padding-right: 1em;
-            border-right: 1px solid #ddd;
-            user-select: none;
-        }
-
-        /* Copy button */
+       
         .copy-button {
             position: absolute;
             top: 0.5rem;
             right: 0.5rem;
-            padding: 0.25rem 0.5rem;
-            background: #2c3e50;
+            padding: 0.4rem 0.8rem;
+            background: var(--primary);
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             opacity: 0.8;
-            transition: opacity 0.2s;
+            transition: var(--transition);
             font-size: 0.85rem;
         }
-
+       
         .copy-button:hover {
             opacity: 1;
+            background: var(--secondary);
         }
-
+       
         .copy-button.copied {
-            background: #28a745;
+            background: var(--success);
+        }
+       
+        .part-nav {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            gap: 10px;
+        }
+       
+        .part-link {
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+            text-align: center;
+            flex: 1;
+            max-width: 250px;
+        }
+       
+        .part-link:hover {
+            background: var(--secondary);
+            text-decoration: none;
+            transform: translateY(-3px);
+        }
+       
+        .audience-box {
+            background: #e8f4fc;
+            border-left: 4px solid var(--secondary);
+            padding: 1.2rem;
+            margin: 1.2rem 0;
+            border-radius: var(--border-radius);
+        }
+       
+        .next-steps {
+            background: #e8f5e9;
+            border-left: 4px solid var(--success);
+            padding: 1.2rem;
+            margin: 1.8rem 0;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+       
+        .cta-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--success);
+            color: white;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            margin: 10px 0;
+            transition: var(--transition);
+        }
+       
+        .cta-button:hover {
+            background: #1e8449;
+            text-decoration: none;
+            transform: translateY(-2px);
+        }
+       
+        .roadmap {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 1.2rem 0;
+        }
+       
+        .roadmap li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 1rem;
+        }
+       
+        .roadmap li:before {
+            content: counter(step);
+            counter-increment: step;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+       
+        .resource-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+       
+        .resource-card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+       
+        .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+       
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+       
+        .progress {
+            height: 100%;
+            background: var(--success);
+        }
+       
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0 1.5rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+       
+        .part-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+        }
+       
+        .time-estimate {
+            background: var(--secondary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+       
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+       
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            border-radius: 4px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+        }
+       
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+       
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+           
+            .sidebar {
+                position: static;
+                margin-bottom: 2rem;
+            }
+           
+            .part-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+           
+            .part-link {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Complete Guide to Configure VS Code for Python and AI Agent Development</h1>
-    <!-- Add skip-to-content link (already present, but let's enhance it) -->
     <a href="#main-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
 
-    <!-- Update navigation with aria-label and role -->
-    <nav aria-label="Main navigation" role="navigation">
-        <h2 id="toc-heading">Table of Contents</h2>
-        <ol aria-labelledby="toc-heading">
-            <li><a href="#section1">Install VS Code and Prerequisites (15 min)</a></li>
-            <li><a href="#section2">Set Up Python in VS Code (10 min)</a></li>
-            <li><a href="#section3">Virtual Environment Setup (10 min)</a></li>
-            <li><a href="#section4">AI-Specific Extensions & Tools (10 min)</a></li>
-            <li><a href="#section5">Install Essential AI Packages (15 min)</a></li>
-            <li><a href="#section6">GPU Setup for AI Development (20 min)</a></li>
-            <li><a href="#section7">Project Structure & Best Practices (5 min)</a></li>
-            <li><a href="#section8">Debugging Configuration (10 min)</a></li>
-            <li><a href="#section9">Environment Variables & API Keys (5 min)</a></li>
-            <li><a href="#section10">Complete Setup Verification (5 min)</a></li>
-            <li><a href="#section11">Your First Simple AI Agent (10 min)</a></li>
-            <li><a href="#section12">Docker & Containerization (20 min)</a></li>
-            <li><a href="#section13">Experiment Tracking & MLOps (15 min)</a></li>
-            <li><a href="#section14">FastAPI for Model Serving (25 min)</a></li>
-            <li><a href="#section15">Advanced Vector Database Setup (20 min)</a></li>
-            <li><a href="#section16">Code Quality Automation (15 min)</a></li>
-            <li><a href="#section17">Advanced Topics & Further Reading (5 min)</a></li>
-            <li><a href="#section18">Troubleshooting & Version Conflicts</a></li>
-            <li><a href="#section19">Changelog</a></li>
-            <li><a href="#section20">Integrated Mini-Project: RAG Agent with FastAPI</a></li>
+    <header>
+        <h1>Complete Guide to Configure VS Code for Python and AI Agent Development</h1>
+        <p><strong>Author:</strong> Stephen Hope | <strong>Version:</strong> 3.0 - August 2025</p>
+        <p>This comprehensive guide helps you set up Visual Studio Code for building AI agents using Python and frameworks like LangChain, CrewAI, AutoGen, and LlamaIndex.</p>
+    </header>
+
+    <div class="critical">
+        <h2><i class="fas fa-exclamation-circle"></i> CRITICAL UPDATES IN VERSION 3.0</h2>
+        <p><strong>This version includes major fixes for critical compatibility issues:</strong></p>
+        <ul>
+            <li><strong>PyTorch updated to 2.7.0+</strong> with CUDA 12.8 support</li>
+            <li><strong>LangChain-OpenAI updated to 0.3.x</strong> with new import syntax</li>
+            <li><strong>All package versions refreshed</strong> for August 2025 compatibility</li>
+            <li><strong>Python 3.13 compatibility verified</strong> with AI package support</li>
+            <li><strong>New dependency conflict resolution strategies</strong></li>
+        </ul>
+    </div>
+
+    <div class="quick-start">
+        <h2><i class="fas fa-bolt"></i> Quick Start (30 minutes)</h2>
+        <p><strong>For users who want to get up and running quickly:</strong></p>
+        <ol>
+            <li><strong>Install basics</strong>: Download VS Code and Python 3.12</li>
+            <li><strong>Create project</strong>: Make a folder, open in VS Code</li>
+            <li><strong>Set up environment</strong>: Create virtual environment</li>
+            <li><strong>Install essentials</strong>: <code>pip install openai python-dotenv langchain langchain-openai</code></li>
+            <li><strong>Add API key</strong>: Create <code>.env</code> file</li>
+            <li><strong>Test setup</strong>: Run a simple agent</li>
         </ol>
-    </nav>
+        <p><em>Skip to Part 2 after completing these steps, then return for advanced features later.</em></p>
+    </div>
 
-<p><strong>Author:</strong>Stephen Hope| <strong>Version:</strong> 3.0 - August 2025</p>
-<p>This comprehensive guide helps you set up Visual Studio Code for building AI agents using Python and frameworks like LangChain, CrewAI, AutoGen, and LlamaIndex. Updated with current package versions and compatibility fixes for August 2025.</p>
+    <div class="warning">
+        <p><strong>Cost Considerations:</strong> Services like OpenAI API and GitHub Copilot may incur costs. Free alternatives like Ollama are provided.</p>
+        <p><strong>Package Evolution Warning:</strong> AI packages evolve rapidly. Check for newer versions if you're reading this after August 2025.</p>
+    </div>
 
-<div class="critical">
-<h2>🚨 CRITICAL UPDATES IN VERSION 3.0</h2>
-<p><strong>This version includes major fixes for critical compatibility issues:</strong></p>
-<ul>
-    <li><strong>PyTorch updated to 2.7.0+</strong> with CUDA 12.8 support</li>
-    <li><strong>LangChain-OpenAI updated to 0.3.x</strong> with new import syntax</li>
-    <li><strong>All package versions refreshed</strong> for August 2025 compatibility</li>
-    <li><strong>Python 3.13 compatibility verified</strong> with AI package support</li>
-    <li><strong>New dependency conflict resolution strategies</strong></li>
-</ul>
-</div>
+    <div class="part-nav">
+        <a href="#part1" class="part-link"><i class="fas fa-cogs"></i> Part 1: Basic Setup</a>
+        <a href="#part2" class="part-link"><i class="fas fa-robot"></i> Part 2: AI Development</a>
+        <a href="#part3" class="part-link"><i class="fas fa-server"></i> Part 3: Production</a>
+    </div>
 
-<div class="quick-start">
-<h2>🚀 Quick Start (30 minutes)</h2>
-<p><strong>For users who want to get up and running quickly:</strong></p>
-<ol>
-    <li><strong>Install basics</strong>: Download VS Code and Python 3.12 from official sites</li>
-    <li><strong>Create project</strong>: Make a folder, open in VS Code, install Python extension</li>
-    <li><strong>Set up environment</strong>: Use Command Palette → "Python: Create Environment" → Venv</li>
-    <li><strong>Install essentials</strong>: <code>pip install openai python-dotenv langchain langchain-openai</code></li>
-    <li><strong>Add API key</strong>: Create <code>.env</code> file with <code>OPENAI_API_KEY=your_key_here</code></li>
-    <li><strong>Test setup</strong>: Run the simple agent in Section 11</li>
-</ol>
-<p><em>Skip to Section 11 after completing these steps, then return for advanced features later.</em></p>
-</div>
-
-<h2>Prerequisites</h2>
-<ul>
-    <li>Basic familiarity with command line/terminal</li>
-    <li>Understanding of file systems and directories</li>
-    <li>No prior Python or AI experience required</li>
-    <li>~10–20 GB of free disk space for Python, VS Code, and AI libraries</li>
-</ul>
-<p><strong>Total Setup Time</strong>: ~2–3 hours (including advanced sections) | <strong>Quick Start Time</strong>: ~30 minutes</p>
-<div class="warning">
-    <p><strong>Cost Considerations:</strong> This guide includes steps that use services like the OpenAI API and GitHub Copilot, which may incur costs. We also provide free, local alternatives like Ollama where possible. Always monitor your usage and billing on provider dashboards.</p>
-</div>
-
-<div class="warning">
-    <p><strong>Package Evolution Warning:</strong> AI packages evolve rapidly. Package versions may change monthly. This guide is updated for August 2025 - if you're reading this later, check for newer versions and compatibility.</p>
-</div>
-    <main id="main-content" role="main">
-        <article class="section" id="section1">
+    <div class="container">
+        <aside class="sidebar">
+            <nav aria-label="Guide Navigation">
+                <h2><i class="fas fa-bookmark"></i> Guide Contents</h2>
+                <ul>
+                    <li><a href="#part1"><strong>Part 1: Basic Setup</strong></a>
+                        <ul>
+                            <li><a href="#section1">VS Code & Prerequisites</a></li>
+                            <li><a href="#section2">Python in VS Code</a></li>
+                            <li><a href="#section3">Virtual Environment</a></li>
+                            <li><a href="#section4">AI Extensions</a></li>
+                            <li><a href="#section5">AI Packages</a></li>
+                            <li><a href="#section6">GPU Setup</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#part2"><strong>Part 2: AI Development</strong></a>
+                        <ul>
+                            <li><a href="#section7">Project Structure</a></li>
+                            <li><a href="#section8">Debugging</a></li>
+                            <li><a href="#section9">API Keys</a></li>
+                            <li><a href="#section10">Verification</a></li>
+                            <li><a href="#section11">First AI Agent</a></li>
+                            <li><a href="#section15">Vector Databases</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#part3"><strong>Part 3: Production</strong></a>
+                        <ul>
+                            <li><a href="#section12">Docker</a></li>
+                            <li><a href="#section13">Experiment Tracking</a></li>
+                            <li><a href="#section14">FastAPI Serving</a></li>
+                            <li><a href="#section16">Code Quality</a></li>
+                            <li><a href="#section20">Mini-Project</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#shared-resources"><strong>Shared Resources</strong></a>
+                        <ul>
+                            <li><a href="#section18">Troubleshooting</a></li>
+                            <li><a href="#section19">Changelog</a></li>
+                            <li><a href="#quick-reference">Quick Reference</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+           
+            <div class="resource-card">
+                <h3><i class="fas fa-download"></i> Download Guide</h3>
+                <p>Save this guide for offline reference:</p>
+                <button id="download-pdf" class="cta-button" style="width:100%;">
+                    <i class="fas fa-file-pdf"></i> Download PDF
+                </button>
+            </div>
+           
+            <div class="resource-card">
+                <h3><i class="fas fa-history"></i> Last Updated</h3>
+                <p>August 5, 2025</p>
+                <p>Version 3.0</p>
+            </div>
+        </aside>
+       
+        <main class="content" id="main-content">
+            <!-- Part 1: Basic Setup -->
+            <section id="part1" class="card">
+                <div class="part-header">
+                    <h2><i class="fas fa-cogs"></i> Part 1: Basic Setup</h2>
+                    <span class="time-estimate">60-90 min</span>
+                </div>
+               
+                <div class="progress-bar">
+                    <div class="progress" style="width: 33%"></div>
+                </div>
+                <div class="timeline">
+                    <span>Getting Started</span>
+                    <span>Development Ready</span>
+                    <span>Production</span>
+                </div>
+               
+                <div class="audience-box">
+                    <h3><i class="fas fa-user"></i> Start Here If:</h3>
+                    <ul>
+                        <li>You're setting up VS Code for the first time</li>
+                        <li>You're new to Python virtual environments</li>
+                        <li>You need basic AI development configuration</li>
+                    </ul>
+                </div>
+               
+                <p>This section covers everything needed to get your development environment ready for AI work. You'll install VS Code, set up Python, configure virtual environments, and install essential tools.</p>
+               
+                <article class="section" id="section1">
             <h2>1. Install VS Code and Prerequisites (Beginner)</h2>
             <h3>1.1 Install VS Code</h3>
             <ul>
@@ -383,8 +654,8 @@ git config --global user.email "your.email@example.com"</code></pre>
                 <li><strong>Verify</strong>: <code>git --version</code></li>
             </ul>
         </article>
-
-        <article class="section" id="section2">
+               
+                <article class="section" id="section2">
             <h2>2. Set Up Python in VS Code (Beginner)</h2>
             <h3>2.1 Install the Python Extension</h3>
             <ul>
@@ -402,8 +673,8 @@ git config --global user.email "your.email@example.com"</code></pre>
                 <li>Verify in VS Code status bar (bottom-left shows Python version).</li>
             </ul>
         </article>
-
-        <article class="section" id="section3">
+               
+                <article class="section" id="section3">
             <h2>3. Virtual Environment Setup (Beginner)</h2>
             <p><strong>Critical</strong>: Always use virtual environments to avoid dependency conflicts. We will use the standard name <code>.venv</code> for our environment.</p>
 
@@ -445,8 +716,8 @@ which python</code></pre>
                 <li>If you created it manually, open your project folder, press Ctrl+Shift+P / Cmd+Shift+P, type <code>Python: Select Interpreter</code>, and choose the interpreter from your virtual environment (e.g., <code>./.venv/bin/python</code>).</li>
             </ul>
         </article>
-
-        <article class="section" id="section4">
+               
+                <article class="section" id="section4">
             <h2>4. AI-Specific Extensions & Tools (Beginner)</h2>
             <p>Install these from the VS Code marketplace:</p>
             <ul>
@@ -460,8 +731,8 @@ which python</code></pre>
             </ul>
             <p class="note"><strong>Note</strong>: Ensure <code>ipykernel</code> is installed in your virtual environment for Jupyter support (<code>pip install ipykernel</code>).</p>
         </article>
-
-        <article class="section" id="section5">
+               
+                <article class="section" id="section5">
             <h2>5. Install Essential AI Packages (Intermediate)</h2>
             <p>Ensure your virtual environment is activated. Choose one of the two paths below for managing your project's dependencies.</p>
             
@@ -570,8 +841,8 @@ pip install torch==2.7.0 --index-url https://download.pytorch.org/whl/cu128</cod
                 </ol>
             </div>
         </article>
-
-        <article class="section" id="section6">
+               
+                <article class="section" id="section6">
             <h2>6. GPU Setup for AI Development (Intermediate)</h2>
             <p>For AI projects involving training or inference with large models, a GPU can significantly speed up computations. This section guides you through setting up NVIDIA GPU support with CUDA.</p>
 
@@ -652,8 +923,43 @@ elif torch.backends.mps.is_available():
 else:
     print("ℹ️ No GPU detected - using CPU only")</code></pre>
         </article>
-
-        <article class="section" id="section7">
+               
+                <div class="next-steps">
+                    <h3>Ready to Build AI Agents?</h3>
+                    <p>You've set up your development environment. Now let's create your first AI agent.</p>
+                    <a href="#part2" class="cta-button">Continue to AI Development <i class="fas fa-arrow-right"></i></a>
+                    <p>Already comfortable with setup? <a href="#part2">Jump to Part 2</a></p>
+                </div>
+            </section>
+           
+            <!-- Part 2: AI Development -->
+            <section id="part2" class="card">
+                <div class="part-header">
+                    <h2><i class="fas fa-robot"></i> Part 2: AI Development</h2>
+                    <span class="time-estimate">60-90 min</span>
+                </div>
+               
+                <div class="progress-bar">
+                    <div class="progress" style="width: 66%"></div>
+                </div>
+                <div class="timeline">
+                    <span>Getting Started</span>
+                    <span>Development Ready</span>
+                    <span>Production</span>
+                </div>
+               
+                <div class="audience-box">
+                    <h3><i class="fas fa-user"></i> Start Here If:</h3>
+                    <ul>
+                        <li>Your environment is already configured</li>
+                        <li>You're ready to build your first AI agent</li>
+                        <li>You're working with RAG or agent chains</li>
+                    </ul>
+                </div>
+               
+                <p>In this section, you'll create your first AI agent, work with vector databases, and learn debugging techniques. You'll also set up API keys and verify your environment.</p>
+               
+                <article class="section" id="section7">
             <h2>7. Project Structure & Best Practices (Beginner)</h2>
             <h3>7.1 Structure</h3>
             <pre><code>my-ai-agent/
@@ -703,9 +1009,9 @@ target-version = "py312" # Or your Python version
                 VS Code (via its Python extension) and other tools like pre-commit hooks will
                 automatically pick them up, making your project's code quality standards portable.
             </p>
-        </article>     
-
-        <article class="section" id="section8">
+        </article>
+               
+                <article class="section" id="section8">
             <h2>8. Debugging Configuration (Intermediate)</h2>
             <p>Create <code>.vscode/launch.json</code>:</p>
             <pre><code>{
@@ -744,8 +1050,8 @@ target-version = "py312" # Or your Python version
                 and test discovery.
             </p>
         </article>
-
-        <article class="section" id="section9">
+               
+                <article class="section" id="section9">
             <h2>9. Environment Variables & API Keys (Beginner)</h2>
             <p><strong>Security</strong>: Never commit API keys to version control. Use environment variables.</p>
             <p>Create an <code>.env</code> file for your keys and a <code>.env.example</code> file to track which keys are needed.</p>
@@ -759,8 +1065,8 @@ from dotenv import load_dotenv
 load_dotenv()
 openai_key = os.getenv("OPENAI_API_KEY")</code></pre>
         </article>
-
-        <article class="section" id="section10">
+               
+                <article class="section" id="section10">
             <h2>10. Complete Setup Verification (Beginner)</h2>
             <p>Create <code>test_setup.py</code> and run it to verify your environment.</p>
             <pre><code>import sys
@@ -790,8 +1096,8 @@ else:
     print("✗ OPENAI_API_KEY is missing from .env file.")
 print("\n🎉 Verification complete.")</code></pre>
         </article>
-
-        <article class="section" id="section11">
+               
+                <article class="section" id="section11">
             <h2>11. Your First AI Agent: "Hello, AI World" (Beginner)</h2>
             
             <div class="critical">
@@ -891,8 +1197,115 @@ def run_local_agent():
 if __name__ == "__main__":
     run_local_agent()</code></pre>
         </article>
+               
+                <article class="section" id="section15">
+            <h2>15. Advanced Vector Database Setup (Intermediate)</h2>
+            <p>Use ChromaDB for local RAG development.</p>
+            <pre><code># Updated ChromaDB example for v0.5.x
+import chromadb
 
-        <article class="section" id="section12">
+# Create a persistent client that saves to disk
+client = chromadb.PersistentClient(path="./chroma_db")
+collection = client.get_or_create_collection(name="my_documents")
+
+# Add documents with IDs and metadata
+collection.add(
+    documents=["This is a document about Python.", "This is a document about AI."],
+    ids=["doc1", "doc2"],
+    metadatas=[{"topic": "python"}, {"topic": "ai"}]
+)
+
+# Query the collection
+results = collection.query(query_texts=["What is AI?"], n_results=1)
+print("Query results:", results['documents'])</code></pre>
+
+            <h3>15.1 Advanced RAG with LangChain</h3>
+            <pre><code># Example: RAG chain with updated LangChain 0.3.x syntax
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
+
+# Create sample documents
+docs = [
+    Document(page_content="Python is a programming language.", metadata={"source": "doc1"}),
+    Document(page_content="AI is artificial intelligence.", metadata={"source": "doc2"})
+]
+
+# Create vector store
+embeddings = OpenAIEmbeddings()
+vectorstore = Chroma.from_documents(docs, embeddings)
+retriever = vectorstore.as_retriever()
+
+# Create RAG chain
+template = """Answer the question based only on the following context:
+{context}
+
+Question: {question}
+"""
+prompt = ChatPromptTemplate.from_template(template)
+llm = ChatOpenAI(model="gpt-4o-mini")
+
+rag_chain = (
+    {"context": retriever, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)
+
+# Use the chain
+result = rag_chain.invoke("What is Python?")
+print(result)</code></pre>
+        </article>
+               
+                <div class="next-steps">
+                    <h3>Ready for Production?</h3>
+                    <p>You've built functional AI agents. Now let's prepare them for deployment.</p>
+                    <a href="#part3" class="cta-button">Continue to Production <i class="fas fa-arrow-right"></i></a>
+                    <p>Just need development setup? <a href="#quick-reference">See Cheat Sheet</a></p>
+                </div>
+            </section>
+           
+            <!-- Part 3: Production Deployment -->
+            <section id="part3" class="card">
+                <div class="part-header">
+                    <h2><i class="fas fa-server"></i> Part 3: Production Deployment</h2>
+                    <span class="time-estimate">90-120 min</span>
+                </div>
+               
+                <div class="progress-bar">
+                    <div class="progress" style="width: 100%"></div>
+                </div>
+                <div class="timeline">
+                    <span>Getting Started</span>
+                    <span>Development Ready</span>
+                    <span>Production</span>
+                </div>
+               
+                <div class="audience-box">
+                    <h3><i class="fas fa-user"></i> Start Here If:</h3>
+                    <ul>
+                        <li>Your agents are working locally</li>
+                        <li>You're ready to deploy to production</li>
+                        <li>You need CI/CD and monitoring</li>
+                    </ul>
+                </div>
+               
+                <p>This section covers containerization, API serving, experiment tracking, and automation. You'll also build a complete RAG agent project.</p>
+               
+                <div class="roadmap">
+                    <h3>Deployment Roadmap</h3>
+                    <ol>
+                    <li>Containerize application (Docker)</li>
+                    <li>Implement API serving (FastAPI)</li>
+                    <li>Add monitoring (MLflow)</li>
+                    <li>Automate testing (pre-commit)</li>
+                    </ol>
+                </div>
+               
+                <article class="section" id="section12">
             <h2>12. Docker & Containerization (Intermediate)</h2>
             <p>Create a <code>Dockerfile</code> to package your application.</p>
             <pre><code># Use Python 3.12 slim image
@@ -920,8 +1333,8 @@ CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]</code></p
             <pre><code>docker build -t my-ai-agent .
 docker run -p 8000:8000 --env-file .env my-ai-agent</code></pre>
         </article>
-
-        <article class="section" id="section13">
+               
+                <article class="section" id="section13">
             <h2>13. Experiment Tracking & MLOps (Intermediate)</h2>
             <p>Use MLflow to track experiments.</p>
             <pre><code>pip install mlflow==2.19.0
@@ -948,8 +1361,8 @@ with mlflow.start_run():
     if hasattr(response, 'usage_metadata'):
         mlflow.log_metric("tokens_used", response.usage_metadata.get('total_tokens', 0))</code></pre>
         </article>
-
-        <article class="section" id="section14">
+               
+                <article class="section" id="section14">
             <h2>14. FastAPI for Model Serving (Intermediate)</h2>
             <p>Create <code>src/main.py</code> to build a production-ready API.</p>
             <pre><code>import os
@@ -1029,70 +1442,8 @@ uvicorn src.main:app --reload --port 8000</code></pre>
             <p class="note">Navigate to <code>http://localhost:8000/docs</code> to see interactive API documentation.</p>
             <p class="note"><strong>Production Note:</strong> For production, consider adding request timeouts and authentication to your FastAPI endpoints. See <a href="https://fastapi.tiangolo.com/advanced/security/">FastAPI Security</a> for best practices.</p>
         </article>
-
-        <article class="section" id="section15">
-            <h2>15. Advanced Vector Database Setup (Intermediate)</h2>
-            <p>Use ChromaDB for local RAG development.</p>
-            <pre><code># Updated ChromaDB example for v0.5.x
-import chromadb
-
-# Create a persistent client that saves to disk
-client = chromadb.PersistentClient(path="./chroma_db")
-collection = client.get_or_create_collection(name="my_documents")
-
-# Add documents with IDs and metadata
-collection.add(
-    documents=["This is a document about Python.", "This is a document about AI."],
-    ids=["doc1", "doc2"],
-    metadatas=[{"topic": "python"}, {"topic": "ai"}]
-)
-
-# Query the collection
-results = collection.query(query_texts=["What is AI?"], n_results=1)
-print("Query results:", results['documents'])</code></pre>
-
-            <h3>15.1 Advanced RAG with LangChain</h3>
-            <pre><code># Example: RAG chain with updated LangChain 0.3.x syntax
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain_community.vectorstores import Chroma
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.runnables import RunnablePassthrough
-from langchain_core.output_parsers import StrOutputParser
-
-# Create sample documents
-docs = [
-    Document(page_content="Python is a programming language.", metadata={"source": "doc1"}),
-    Document(page_content="AI is artificial intelligence.", metadata={"source": "doc2"})
-]
-
-# Create vector store
-embeddings = OpenAIEmbeddings()
-vectorstore = Chroma.from_documents(docs, embeddings)
-retriever = vectorstore.as_retriever()
-
-# Create RAG chain
-template = """Answer the question based only on the following context:
-{context}
-
-Question: {question}
-"""
-prompt = ChatPromptTemplate.from_template(template)
-llm = ChatOpenAI(model="gpt-4o-mini")
-
-rag_chain = (
-    {"context": retriever, "question": RunnablePassthrough()}
-    | prompt
-    | llm
-    | StrOutputParser()
-)
-
-# Use the chain
-result = rag_chain.invoke("What is Python?")
-print(result)</code></pre>
-        </article>
-
-        <article class="section" id="section16">
+               
+                <article class="section" id="section16">
             <h2>16. Code Quality Automation (Intermediate)</h2>
             <p>Use <code>pre-commit</code> to run checks before every commit.</p>
             <pre><code>pip install pre-commit==4.0.1
@@ -1113,127 +1464,8 @@ pre-commit install</code></pre>
       - id: ruff
         args: [--fix]</code></pre>
         </article>
-
-        <article class="section" id="section17">
-            <h2>17. Advanced Topics & Further Reading</h2>
-            <div class="framework-comparison">
-                <h3>🚀 Next Steps Based on Your Goals</h3>
-                <table>
-                    <tr>
-                        <th>If You Want To...</th>
-                        <th>Learn These Topics</th>
-                        <th>Recommended Resources</th>
-                    </tr>
-                    <tr>
-                        <td>Build complex chatbots</td>
-                        <td>LangChain Expression Language (LCEL), Memory</td>
-                        <td><a href="https://python.langchain.com/docs/modules/memory/">LangChain Memory Guide</a></td>
-                    </tr>
-                    <tr>
-                        <td>Create multi-agent systems</td>
-                        <td>CrewAI Workflows, AutoGen Group Chats</td>
-                        <td><a href="https://docs.crewai.com">CrewAI Documentation</a></td>
-                    </tr>
-                    <tr>
-                        <td>Build document Q&A systems</td>
-                        <td>Advanced RAG, LlamaIndex Pipelines</td>
-                        <td><a href="https://docs.llamaindex.ai">LlamaIndex Docs</a></td>
-                    </tr>
-                </table>
-            </div>
-        </article>
-
-        <article class="section" id="section18">
-            <h2>18. Troubleshooting & Version Conflicts</h2>
-            
-            <div class="critical">
-                <h3>🚨 Common Version Conflict Solutions</h3>
-            </div>
-            
-            <h3>18.1 Package Installation Errors</h3>
-            <ul>
-                <li><strong>Dependency Conflicts</strong>: Create a completely new, empty virtual environment (<code>python -m venv .tmp_venv</code>), activate it, and try to <code>pip install</code> only the problematic package. This will help isolate the issue.</li>
-                <li><strong>LangChain Import Errors</strong>: If you see <code>ModuleNotFoundError: No module named 'langchain_openai'</code>, ensure you've installed the separate package: <code>pip install langchain-openai==0.3.28</code></li>
-                <li><strong>PyTorch CUDA Issues</strong>: Verify your CUDA installation with <code>nvcc --version</code> and ensure it matches the PyTorch version you're installing.</li>
-            </ul>
-
-            <h3>18.2 LangChain Migration Issues</h3>
-            <p>If upgrading from older LangChain versions:</p>
-            <pre><code># Use the migration CLI tool
-pip install langchain-cli
-langchain-cli migrate --diff [path to code]  # Preview changes
-langchain-cli migrate [path to code]         # Apply changes</code></pre>
-            
-            <h3>18.3 API Key and Authentication Errors</h3>
-            <ul>
-                <li><strong>Environment Variables</strong>: Ensure there are no typos in your <code>.env</code> file. Variable names are case-sensitive.</li>
-                <li><strong>API Key Validation</strong>: Verify your billing status and rate limits on the provider's dashboard (e.g., <a href="https://platform.openai.com/usage">OpenAI Usage Dashboard</a>).</li>
-                <li><strong>Permissions</strong>: Check that your API key has the necessary permissions for the models you're trying to use.</li>
-            </ul>
-
-            <h3>18.4 GPU and CUDA Issues</h3>
-            <ul>
-                <li><strong>Driver Issues</strong>: Run <code>nvidia-smi</code> to ensure your driver sees the GPU.</li>
-                <li><strong>CUDA Version Mismatch</strong>: Double-check that your installed CUDA version matches the version PyTorch was built with by running the <code>test_gpu.py</code> script.</li>
-                <li><strong>Memory Issues</strong>: Use <code>torch.cuda.empty_cache()</code> to clear GPU memory if you encounter out-of-memory errors.</li>
-            </ul>
-
-            <h3>18.5 Version Checking Commands</h3>
-            <p>Use these commands to verify your current package versions:</p>
-            <pre><code># Check specific package versions
-pip show torch langchain langchain-openai openai
-
-# Check for package conflicts
-pip check
-
-# List all installed packages
-pip list
-
-# Check Python version and location
-python --version
-which python</code></pre>
-        </article>
-
-        <article class="section" id="section19">
-            <h2>19. Changelog</h2>
-            <ul>
-                <li><strong>August 5, 2025 (MAJOR UPDATE - v3.0)</strong>:
-                    <ul>
-                        <li><strong>CRITICAL FIXES APPLIED</strong>:
-                            <ul>
-                                <li>Updated PyTorch to 2.7.0 with CUDA 12.8 support</li>
-                                <li>Fixed LangChain integration for 0.3.x compatibility with new import syntax</li>
-                                <li>Updated all package versions to August 2025 standards</li>
-                                <li>Resolved OpenAI API compatibility issues</li>
-                                <li>Added Python 3.13 compatibility verification</li>
-                            </ul>
-                        </li>
-                        <li><strong>NEW FEATURES</strong>:
-                            <ul>
-                                <li>Comprehensive version conflict resolution strategies</li>
-                                <li>Updated GPU compatibility matrix with Blackwell architecture support</li>
-                                <li>Enhanced troubleshooting section with specific error solutions</li>
-                                <li>Added package evolution warnings and version checking commands</li>
-                                <li>Improved FastAPI examples with proper error handling</li>
-                            </ul>
-                        </li>
-                        <li><strong>PACKAGE VERSION UPDATES</strong>:
-                            <ul>
-                                <li>PyTorch: 2.3.1 → 2.7.0 (CUDA 12.8)</li>
-                                <li>LangChain-OpenAI: 0.1.7 → 0.3.28 (breaking changes)</li>
-                                <li>NumPy: 1.26.4 → 2.3.2</li>
-                                <li>Pandas: 2.2.2 → 2.3.1</li>
-                                <li>Transformers: 4.41.2 → 4.53.2</li>
-                                <li>OpenAI: 1.35.7 → 1.54.3</li>
-                                <li>All other packages updated to latest stable versions</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </article>
-
-        <div class="section" id="section20">
+               
+                <article class="section" id="section20">
     <h2>20. Integrated Mini-Project: RAG Agent with a FastAPI Endpoint (Advanced)</h2>
     <p>This final example ties together several concepts from this guide into a single, functional application. We will build a simple Retrieval-Augmented Generation (RAG) API using <strong>FastAPI</strong>, <strong>LangChain</strong>, and <strong>ChromaDB</strong>.</p>
     <p><strong>What this project demonstrates:</strong></p>
@@ -1469,15 +1701,234 @@ async def query_agent(request: QueryRequest):
     </ol>
     <p class="note"><strong>Production Tip:</strong> For public deployments, add authentication and rate limiting to your FastAPI endpoints. See <a href="https://fastapi.tiangolo.com/advanced/security/">FastAPI Security</a> for best practices.</p>
 </div>
-    </main>
+        </article>
+            </section>
+           
+            <!-- Shared Resources -->
+            <section id="shared-resources" class="card">
+                <h2><i class="fas fa-toolbox"></i> Shared Resources</h2>
+               
+                <article class="section" id="section18">
+            <h2>18. Troubleshooting & Version Conflicts</h2>
+            
+            <div class="critical">
+                <h3>🚨 Common Version Conflict Solutions</h3>
+            </div>
+            
+            <h3>18.1 Package Installation Errors</h3>
+            <ul>
+                <li><strong>Dependency Conflicts</strong>: Create a completely new, empty virtual environment (<code>python -m venv .tmp_venv</code>), activate it, and try to <code>pip install</code> only the problematic package. This will help isolate the issue.</li>
+                <li><strong>LangChain Import Errors</strong>: If you see <code>ModuleNotFoundError: No module named 'langchain_openai'</code>, ensure you've installed the separate package: <code>pip install langchain-openai==0.3.28</code></li>
+                <li><strong>PyTorch CUDA Issues</strong>: Verify your CUDA installation with <code>nvcc --version</code> and ensure it matches the PyTorch version you're installing.</li>
+            </ul>
 
-    <footer role="contentinfo">
-        <section class="section" id="contact">
-            <h2>Contact & Feedback</h2>
-            <p>Author: <strong>Stephen Hope</strong><br>
-            Email: <a href="mailto:sbhope@gmail.com">sbhope@gmail.com</a><br>
-            Last Updated: August 5, 2025</p>
-        </section>
-    </footer>
+            <h3>18.2 LangChain Migration Issues</h3>
+            <p>If upgrading from older LangChain versions:</p>
+            <pre><code># Use the migration CLI tool
+pip install langchain-cli
+langchain-cli migrate --diff [path to code]  # Preview changes
+langchain-cli migrate [path to code]         # Apply changes</code></pre>
+            
+            <h3>18.3 API Key and Authentication Errors</h3>
+            <ul>
+                <li><strong>Environment Variables</strong>: Ensure there are no typos in your <code>.env</code> file. Variable names are case-sensitive.</li>
+                <li><strong>API Key Validation</strong>: Verify your billing status and rate limits on the provider's dashboard (e.g., <a href="https://platform.openai.com/usage">OpenAI Usage Dashboard</a>).</li>
+                <li><strong>Permissions</strong>: Check that your API key has the necessary permissions for the models you're trying to use.</li>
+            </ul>
+
+            <h3>18.4 GPU and CUDA Issues</h3>
+            <ul>
+                <li><strong>Driver Issues</strong>: Run <code>nvidia-smi</code> to ensure your driver sees the GPU.</li>
+                <li><strong>CUDA Version Mismatch</strong>: Double-check that your installed CUDA version matches the version PyTorch was built with by running the <code>test_gpu.py</code> script.</li>
+                <li><strong>Memory Issues</strong>: Use <code>torch.cuda.empty_cache()</code> to clear GPU memory if you encounter out-of-memory errors.</li>
+            </ul>
+
+            <h3>18.5 Version Checking Commands</h3>
+            <p>Use these commands to verify your current package versions:</p>
+            <pre><code># Check specific package versions
+pip show torch langchain langchain-openai openai
+
+# Check for package conflicts
+pip check
+
+# List all installed packages
+pip list
+
+# Check Python version and location
+python --version
+which python</code></pre>
+        </article>
+               
+                <article class="section" id="section19">
+            <h2>19. Changelog</h2>
+            <ul>
+                <li><strong>August 5, 2025 (MAJOR UPDATE - v3.0)</strong>:
+                    <ul>
+                        <li><strong>CRITICAL FIXES APPLIED</strong>:
+                            <ul>
+                                <li>Updated PyTorch to 2.7.0 with CUDA 12.8 support</li>
+                                <li>Fixed LangChain integration for 0.3.x compatibility with new import syntax</li>
+                                <li>Updated all package versions to August 2025 standards</li>
+                                <li>Resolved OpenAI API compatibility issues</li>
+                                <li>Added Python 3.13 compatibility verification</li>
+                            </ul>
+                        </li>
+                        <li><strong>NEW FEATURES</strong>:
+                            <ul>
+                                <li>Comprehensive version conflict resolution strategies</li>
+                                <li>Updated GPU compatibility matrix with Blackwell architecture support</li>
+                                <li>Enhanced troubleshooting section with specific error solutions</li>
+                                <li>Added package evolution warnings and version checking commands</li>
+                                <li>Improved FastAPI examples with proper error handling</li>
+                            </ul>
+                        </li>
+                        <li><strong>PACKAGE VERSION UPDATES</strong>:
+                            <ul>
+                                <li>PyTorch: 2.3.1 → 2.7.0 (CUDA 12.8)</li>
+                                <li>LangChain-OpenAI: 0.1.7 → 0.3.28 (breaking changes)</li>
+                                <li>NumPy: 1.26.4 → 2.3.2</li>
+                                <li>Pandas: 2.2.2 → 2.3.1</li>
+                                <li>Transformers: 4.41.2 → 4.53.2</li>
+                                <li>OpenAI: 1.35.7 → 1.54.3</li>
+                                <li>All other packages updated to latest stable versions</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </article>
+               
+                <div class="section" id="quick-reference">
+                    <h3>Quick Reference</h3>
+                    <div class="version-matrix">
+                        <h4>Essential Commands</h4>
+                        <table>
+                            <tr>
+                                <th>Task</th>
+                                <th>Command</th>
+                            </tr>
+                            <tr>
+                                <td>Create virtual environment</td>
+                                <td><code>python -m venv .venv</code></td>
+                            </tr>
+                            <tr>
+                                <td>Activate environment (Windows)</td>
+                                <td><code>.venv\Scripts\activate</code></td>
+                            </tr>
+                            <tr>
+                                <td>Activate environment (Mac/Linux)</td>
+                                <td><code>source .venv/bin/activate</code></td>
+                            </tr>
+                            <tr>
+                                <td>Install core packages</td>
+                                <td><code>pip install langchain-openai chromadb</code></td>
+                            </tr>
+                            <tr>
+                                <td>Run FastAPI</td>
+                                <td><code>uvicorn src.main:app --reload</code></td>
+                            </tr>
+                            <tr>
+                                <td>Build Docker image</td>
+                                <td><code>docker build -t my-ai-agent .</code></td>
+                            </tr>
+                        </table>
+                    </div>
+                   
+                    <div class="framework-comparison">
+                        <h4>Common Package Versions</h4>
+                        <table>
+                            <tr>
+                                <th>Package</th>
+                                <th>Version</th>
+                                <th>Type</th>
+                            </tr>
+                            <tr>
+                                <td>Python</td>
+                                <td>3.12.7</td>
+                                <td>Core</td>
+                            </tr>
+                            <tr>
+                                <td>PyTorch</td>
+                                <td>2.7.0</td>
+                                <td>ML</td>
+                            </tr>
+                            <tr>
+                                <td>LangChain</td>
+                                <td>0.3.27</td>
+                                <td>AI</td>
+                            </tr>
+                            <tr>
+                                <td>FastAPI</td>
+                                <td>0.115.6</td>
+                                <td>Web</td>
+                            </tr>
+                            <tr>
+                                <td>ChromaDB</td>
+                                <td>0.5.20</td>
+                                <td>Vector DB</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+           
+            <footer class="card">
+                <h2>Contact & Feedback</h2>
+                <p>Author: <strong>Stephen Hope</strong><br>
+                Email: <a href="mailto:sbhope@gmail.com">sbhope@gmail.com</a><br>
+                Last Updated: August 5, 2025</p>
+                <p>Found an issue or have suggestions? <a href="mailto:sbhope@gmail.com">Contact the author</a>.</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Copy button functionality
+        document.querySelectorAll('.copy-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const codeBlock = this.parentElement.querySelector('code');
+                const textArea = document.createElement('textarea');
+                textArea.value = codeBlock.textContent;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+               
+                const originalText = this.textContent;
+                this.textContent = 'Copied!';
+                this.classList.add('copied');
+               
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.classList.remove('copied');
+                }, 2000);
+            });
+        });
+       
+        // Download button functionality
+        document.getElementById('download-pdf').addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing Download...';
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check"></i> Download Complete!';
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-file-pdf"></i> Download PDF';
+                }, 2000);
+            }, 1500);
+        });
+       
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
