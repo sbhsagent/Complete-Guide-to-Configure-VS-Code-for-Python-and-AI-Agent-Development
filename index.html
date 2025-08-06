@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1231,6 +1232,243 @@ which python</code></pre>
                 </li>
             </ul>
         </article>
+
+        <div class="section" id="section20">
+    <h2>20. Integrated Mini-Project: RAG Agent with a FastAPI Endpoint (Advanced)</h2>
+    <p>This final example ties together several concepts from this guide into a single, functional application. We will build a simple Retrieval-Augmented Generation (RAG) API using <strong>FastAPI</strong>, <strong>LangChain</strong>, and <strong>ChromaDB</strong>.</p>
+    <p><strong>What this project demonstrates:</strong></p>
+    <ul>
+        <li><strong>Project Structure:</strong> Using the <code>src/</code> directory for modular code.</li>
+        <li><strong>Dependency Management:</strong> Using packages like <code>fastapi</code>, <code>langchain</code>, and <code>chromadb</code>.</li>
+        <li><strong>Vector Databases:</strong> Setting up a persistent ChromaDB store.</li>
+        <li><strong>Advanced Chains:</strong> Building a RAG chain with modern LangChain (LCEL).</li>
+        <li><strong>API Serving:</strong> Exposing the RAG chain through a secure FastAPI endpoint.</li>
+        <li><strong>Environment Variables:</strong> Loading API keys correctly with <code>python-dotenv</code>.</li>
+    </ul>
+
+    <div class="quick-start">
+        <h3>🚀 Project Goal</h3>
+        <p>To create an API endpoint <code>/query</code> that accepts a question, searches a small knowledge base for relevant context, and uses an LLM to generate an answer based on that context.</p>
+    </div>
+
+    <h3>Step 1: Update Project Structure and Dependencies</h3>
+    <p>First, ensure your project has the following structure and that the necessary packages are installed. We will create three new files: <code>src/vector_store.py</code>, <code>src/rag_chain.py</code>, and <code>src/main_rag_api.py</code>.</p>
+    <pre><code>my-ai-agent/
+├── .venv/
+├── .env
+├── chroma_db/        # Will be created automatically by ChromaDB
+├── src/
+│   ├── __init__.py
+│   ├── vector_store.py # New: Logic for setting up ChromaDB
+│   ├── rag_chain.py    # New: Logic for the RAG chain
+│   └── main_rag_api.py # New: The FastAPI application
+└── ...</code></pre>
+
+    <p>Ensure you have the required packages installed:</p>
+    <p>See <a href="https://pypi.org/project/fastapi/">fastapi</a>, <a href="https://pypi.org/project/uvicorn/">uvicorn</a>, <a href="https://pypi.org/project/langchain/">langchain</a>, <a href="https://pypi.org/project/langchain-openai/">langchain-openai</a>, <a href="https://pypi.org/project/langchain-community/">langchain-community</a>, <a href="https://pypi.org/project/openai/">openai</a>, <a href="https://pypi.org/project/chromadb/">chromadb</a>, <a href="https://pypi.org/project/python-dotenv/">python-dotenv</a>, <a href="https://pypi.org/project/sentence-transformers/">sentence-transformers</a> on PyPI.</p>
+    <pre><code>pip install fastapi uvicorn "langchain[llms]" langchain-openai langchain-community openai chromadb python-dotenv sentence-transformers</code></pre>
+    <p class="note">The <code>sentence-transformers</code> package is used by ChromaDB's default embedding function if you don't provide one, but we will explicitly use OpenAI's embeddings for better performance.</p>
+
+    <h3>Step 2: Create the Vector Store (<code>src/vector_store.py</code>)</h3>
+    <p>This module will handle setting up our document store. It will initialize ChromaDB, add documents to it, and create a retriever object that LangChain can use.</p>
+    <pre><code># src/vector_store.py
+import chromadb
+from langchain_community.vectorstores import Chroma
+from langchain_openai import OpenAIEmbeddings
+from langchain_core.documents import Document
+
+# Define the persistent directory
+CHROMA_PATH = "./chroma_db"
+
+def get_retriever():
+    """
+    Initializes and returns a ChromaDB retriever from a predefined set of documents.
+    """
+    # Sample documents for our knowledge base
+    docs = [
+        Document(
+            page_content="VS Code is a lightweight but powerful source code editor from Microsoft.",
+            metadata={"source": "doc1", "topic": "tools"}
+        ),
+        Document(
+            page_content="A virtual environment is a self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages.",
+            metadata={"source": "doc2", "topic": "python"}
+        ),
+        Document(
+            page_content="RAG, or Retrieval-Augmented Generation, is a technique for enhancing the accuracy and reliability of large language models (LLMs) with facts fetched from external sources.",
+            metadata={"source": "doc3", "topic": "ai"}
+        ),
+        Document(
+            page_content="FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.8+ based on standard Python type hints.",
+            metadata={"source": "doc4", "topic": "tools"}
+        ),
+    ]
+
+    # Initialize OpenAI embeddings
+    embeddings = OpenAIEmbeddings()
+
+    # Create a new ChromaDB persistent client
+    # This will save the vector store to disk in the 'chroma_db' directory
+    db_client = chromadb.PersistentClient(path=CHROMA_PATH)
+
+    # Create or load the vector store
+    vectorstore = Chroma.from_documents(
+        documents=docs, 
+        embedding=embeddings,
+        persist_directory=CHROMA_PATH
+    )
+
+    # Create and return a retriever
+    # 'k=2' means it will retrieve the top 2 most relevant documents
+    return vectorstore.as_retriever(search_kwargs={"k": 2})
+
+if __name__ == '__main__':
+    # A simple test to verify the retriever is working
+    print("Initializing and testing the vector store...")
+    retriever = get_retriever()
+    test_query = "What is RAG?"
+    results = retriever.invoke(test_query)
+    print(f"Retrieved {len(results)} documents for query: '{test_query}'")
+    for doc in results:
+        print(f"- {doc.page_content}")
+    print("\nVector store setup complete and verified.")
+</code></pre>
+
+    <h3>Step 3: Create the RAG Chain (<code>src/rag_chain.py</code>)</h3>
+    <p>This module defines the core logic of our AI. It imports the retriever from the previous step and chains it together with a prompt template and an LLM to create the final RAG chain.</p>
+    <pre><code># src/rag_chain.py
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain_openai import ChatOpenAI
+from src.vector_store import get_retriever
+
+def get_rag_chain():
+    """
+    Creates and returns a RAG chain using the vector store retriever.
+    """
+    retriever = get_retriever()
+    
+    # RAG prompt template
+    template = """You are an assistant for question-answering tasks. 
+    Use the following pieces of retrieved context to answer the question. 
+    If you don't know the answer, just say that you don't know. 
+    Keep the answer concise.
+
+    Context: {context} 
+
+    Question: {question} 
+
+    Answer:"""
+    
+    prompt = ChatPromptTemplate.from_template(template)
+    
+    # Initialize the LLM
+    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    
+    # Create the RAG chain using LangChain Expression Language (LCEL)
+    rag_chain = (
+        {"context": retriever, "question": RunnablePassthrough()}
+        | prompt
+        | llm
+        | StrOutputParser()
+    )
+    
+    return rag_chain
+
+if __name__ == '__main__':
+    # A simple test to verify the chain is working
+    print("Testing the RAG chain...")
+    chain = get_rag_chain()
+    response = chain.invoke("What is FastAPI?")
+    print(response)
+</code></pre>
+
+    <h3>Step 4: Build the FastAPI App (<code>src/main_rag_api.py</code>)</h3>
+    <p>This is the entry point for our API. It loads the RAG chain, defines the request and response models, and creates an endpoint to handle user queries.</p>
+    <pre><code># src/main_rag_api.py
+import os
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from dotenv import load_dotenv
+from src.rag_chain import get_rag_chain
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Initialize the FastAPI app
+app = FastAPI(
+    title="RAG API Server",
+    version="1.0",
+    description="A simple API server for a Retrieval-Augmented Generation agent.",
+)
+
+# --- Pydantic Models for Request and Response ---
+class QueryRequest(BaseModel):
+    question: str
+
+class QueryResponse(BaseModel):
+    answer: str
+
+# --- API Endpoints ---
+@app.get("/", summary="Health Check")
+async def health_check():
+    """A simple health check endpoint to confirm the server is running."""
+    return {"status": "ok", "message": "RAG API is running"}
+
+@app.post("/query", response_model=QueryResponse, summary="Query the RAG Agent")
+async def query_agent(request: QueryRequest):
+    """
+    Receives a question, processes it through the RAG chain, and returns the answer.
+    """
+    if not os.getenv("OPENAI_API_KEY"):
+        raise HTTPException(status_code=500, detail="OPENAI_API_KEY not found in environment variables.")
+    
+    if not request.question:
+        raise HTTPException(status_code=400, detail="Question field cannot be empty.")
+    
+    try:
+        # Get the singleton RAG chain instance
+        rag_chain = get_rag_chain()
+        answer = rag_chain.invoke(request.question)
+        return QueryResponse(answer=answer)
+    except Exception as e:
+        # A generic error handler for issues during chain invocation
+        raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
+
+# To run this app:
+# uvicorn src.main_rag_api:app --reload --port 8000
+</code></pre>
+
+    <h3>Step 5: Run and Test Your Integrated Application</h3>
+    <p>With all the files in place, you can now run your API server.</p>
+
+    <ol>
+        <li><strong>Ensure your <code>.env</code> file contains your <code>OPENAI_API_KEY</code>.</strong></li>
+        <li>
+            <strong>Start the Server:</strong> Open your terminal (with the virtual environment activated) and run:
+            <pre><code>uvicorn src.main_rag_api:app --reload --port 8000</code></pre>
+        </li>
+        <li>
+            <strong>Test via Interactive Docs:</strong> Open your browser and navigate to <a href="http://127.0.0.1:8000/docs">http://127.0.0.1:8000/docs</a>. You will see the FastAPI interface.
+            <ul>
+                <li>Expand the <code>/query</code> endpoint.</li>
+                <li>Click "Try it out".</li>
+                <li>Enter a question in the request body, such as: <code>"What is the purpose of a virtual environment?"</code></li>
+                <li>Click "Execute". You should see the AI-generated response based on the context from your vector store.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Test via <code>curl</code> (Optional):</strong>
+            <pre><code>curl -X POST "http://127.0.0.1:8000/query" \
+-H "Content-Type: application/json" \
+-d '{"question": "What is VS Code?"}'</code></pre>
+            <p><strong>Expected output:</strong></p>
+            <pre><code>{"answer":"VS Code is a lightweight but powerful source code editor from Microsoft."}</code></pre>
+        </li>
+    </ol>
+    <p class="note"><strong>Production Tip:</strong> For public deployments, add authentication and rate limiting to your FastAPI endpoints. See <a href="https://fastapi.tiangolo.com/advanced/security/">FastAPI Security</a> for best practices.</p>
+</div>
     </main>
 
     <footer role="contentinfo">
