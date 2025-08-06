@@ -267,7 +267,51 @@
             <li><a href="#section20">Integrated Mini-Project: RAG Agent with FastAPI</a></li>
         </ol>
     </nav>
+<h1>Complete Guide to Configure VS Code for Python and AI Agent Development</h1>
+<p><strong>Author:</strong>Stephen Hope| <strong>Version:</strong> 3.0 - August 2025</p>
+<p>This comprehensive guide helps you set up Visual Studio Code for building AI agents using Python and frameworks like LangChain, CrewAI, AutoGen, and LlamaIndex. Updated with current package versions and compatibility fixes for August 2025.</p>
 
+<div class="critical">
+<h2>🚨 CRITICAL UPDATES IN VERSION 3.0</h2>
+<p><strong>This version includes major fixes for critical compatibility issues:</strong></p>
+<ul>
+    <li><strong>PyTorch updated to 2.7.0+</strong> with CUDA 12.8 support</li>
+    <li><strong>LangChain-OpenAI updated to 0.3.x</strong> with new import syntax</li>
+    <li><strong>All package versions refreshed</strong> for August 2025 compatibility</li>
+    <li><strong>Python 3.13 compatibility verified</strong> with AI package support</li>
+    <li><strong>New dependency conflict resolution strategies</strong></li>
+</ul>
+</div>
+
+<div class="quick-start">
+<h2>🚀 Quick Start (30 minutes)</h2>
+<p><strong>For users who want to get up and running quickly:</strong></p>
+<ol>
+    <li><strong>Install basics</strong>: Download VS Code and Python 3.12 from official sites</li>
+    <li><strong>Create project</strong>: Make a folder, open in VS Code, install Python extension</li>
+    <li><strong>Set up environment</strong>: Use Command Palette → "Python: Create Environment" → Venv</li>
+    <li><strong>Install essentials</strong>: <code>pip install openai python-dotenv langchain langchain-openai</code></li>
+    <li><strong>Add API key</strong>: Create <code>.env</code> file with <code>OPENAI_API_KEY=your_key_here</code></li>
+    <li><strong>Test setup</strong>: Run the simple agent in Section 11</li>
+</ol>
+<p><em>Skip to Section 11 after completing these steps, then return for advanced features later.</em></p>
+</div>
+
+<h2>Prerequisites</h2>
+<ul>
+    <li>Basic familiarity with command line/terminal</li>
+    <li>Understanding of file systems and directories</li>
+    <li>No prior Python or AI experience required</li>
+    <li>~10–20 GB of free disk space for Python, VS Code, and AI libraries</li>
+</ul>
+<p><strong>Total Setup Time</strong>: ~2–3 hours (including advanced sections) | <strong>Quick Start Time</strong>: ~30 minutes</p>
+<div class="warning">
+    <p><strong>Cost Considerations:</strong> This guide includes steps that use services like the OpenAI API and GitHub Copilot, which may incur costs. We also provide free, local alternatives like Ollama where possible. Always monitor your usage and billing on provider dashboards.</p>
+</div>
+
+<div class="warning">
+    <p><strong>Package Evolution Warning:</strong> AI packages evolve rapidly. Package versions may change monthly. This guide is updated for August 2025 - if you're reading this later, check for newer versions and compatibility.</p>
+</div>
     <main id="main-content" role="main">
         <article class="section" id="section1">
             <h2>1. Install VS Code and Prerequisites (Beginner)</h2>
