@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Step-by-step guide to Configure VS Code for Python and AI Agent Development Updated for August 2025.">
 <title>Complete Guide to Configure VS Code for Python and AI Agent Development</title>
 <style>
 body {
@@ -179,79 +180,84 @@ background-color: #f2f2f2;
     <li><a href="#section15">Advanced Vector Database Setup (20 min)</a></li>
     <li><a href="#section16">Code Quality Automation (15 min)</a></li>
     <li><a href="#section17">Advanced Topics & Further Reading (5 min)</a></li>
-    <li><a href="#section18">Troubleshooting & Version Conflicts</a></li>
-    <li><a href="#section19">Changelog</a></li>
-    <li><a href="#section20">Integrated Mini-Project: RAG Agent with a FastAPI Endpoint (Advanced)</a></li>
+    <li><a href="#section18">Troubleshooting & Version Conflicts</a></li>  
+    <li><a href="#section19">Integrated Mini-Project: RAG Agent with a FastAPI Endpoint (Advanced)</a></li>
+    <li><a href="#section20">Changelog</a></li>
 </ol>
 
 <div class="section" id="section1">
-    <h2>1. Install VS Code and Prerequisites (Beginner)</h2>
-    <h3>1.1 Install VS Code</h3>
-    <ul>
-        <li><strong>Download</strong>: Get the stable version from <a href="https://code.visualstudio.com/download">code.visualstudio.com</a>.</li>
-        <li><strong>Install</strong>: Follow prompts for your OS (Windows, macOS, or Linux).</li>
-        <li><strong>Verify</strong>: Open VS Code and confirm it launches.</li>
-    </ul>
+<h2>1. Install VS Code and Prerequisites (Beginner)</h2>
 
-    <h3>1.2 Install Python</h3>
-    <div class="version-matrix">
-        <h4>Python Version Compatibility Matrix (August 2025)</h4>
-        <table>
-            <tr>
-                <th>Python Version</th>
-                <th>AI Library Support</th>
-                <th>Recommendation</th>
-                <th>Use Case</th>
-            </tr>
-            <tr>
-                <td>3.11.9</td>
-                <td>✅ Universal support</td>
-                <td>🟢 Stable choice</td>
-                <td>Production, maximum compatibility</td>
-            </tr>
-            <tr>
-                <td>3.12.7</td>
-                <td>✅ Excellent support</td>
-                <td>🟢 Recommended</td>
-                <td>New projects, modern features</td>
-            </tr>
-            <tr>
-                <td>3.13.5</td>
-                <td>⚠️ Limited AI support</td>
-                <td>🟡 Wait for AI ecosystem</td>
-                <td><a href="https://www.tensorflow.org/">TensorFlow</a>, some packages still unsupported</td>
-            </tr>
-        </table>
-    </div>
-    <ul>
-        <li><strong>Recommended Version</strong>: Python 3.12.7 from <a href="https://www.python.org/downloads/">python.org</a></li>
-        <li><strong>Installation Setup</strong>:
-            <ul>
-                <li><strong>Windows</strong>: Check "Add Python to PATH" during installation. After installation, open a *new* terminal window to verify.</li>
-                <li><strong>macOS</strong>: Use <a href="https://brew.sh/">Homebrew</a>: <code>brew install python@3.12</code>. For Apple Silicon (M1/M2/M3), ensure Rosetta 2 is installed (<code>softwareupdate --install-rosetta</code>) for compatibility with some packages.</li>
-                <li><strong>Linux</strong>: Use system package manager or <a href="https://github.com/pyenv/pyenv"><code>pyenv</code></a> for version management (e.g., <code>pyenv install 3.12.7</code>).</li>
-                <li><strong>Cross-Platform Note</strong>: For Windows users, consider using <a href="https://learn.microsoft.com/en-us/windows/wsl/install">Windows Subsystem for Linux (WSL)</a> for a more consistent, Linux-aligned development experience, which simplifies Docker usage and package management.</li>
-            </ul>
-        </li>
-        <li><strong>Verify Installation</strong>:
-            <pre><code># Check Python version
-python --version
-# or on some systems
-python3 --version
-# Should show: Python 3.12.7</code></pre>
-        </li>
-    </ul>
+<h3>1.1 Install Visual Studio Code</h3>
+<ul>
+  <li><strong>Download:</strong> Visit <a href="https://code.visualstudio.com/download">code.visualstudio.com/download</a> and choose the version for your operating system (Windows, macOS, or Linux).</li>
+  <li><strong>Install:</strong> Follow the platform-specific installer instructions.</li>
+  <li><strong>Verify:</strong> Open VS Code and ensure it starts without errors.</li>
+</ul>
 
-    <h3>1.3 Install Git</h3>
-    <ul>
-        <li><strong>Download</strong>: Install Git from <a href="https://git-scm.com/downloads">git-scm.com</a>.</li>
-        <li><strong>Configure</strong>: Set up your name and email:
-            <pre><code>git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"</code></pre>
-        </li>
-        <li><strong>Verify</strong>: <code>git --version</code></li>
-    </ul>
+<h3>1.2 Install Python</h3>
+<div class="version-matrix">
+<h4>Python Version Compatibility Matrix (August 2025)</h4>
+<table>
+  <thead>
+    <tr>
+      <th>Python Version</th>
+      <th>AI Library Support</th>
+      <th>Recommendation</th>
+      <th>Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3.11.9</td>
+      <td>✅ Full support</td>
+      <td>🟢 Most stable</td>
+      <td>Maximum compatibility for all frameworks</td>
+    </tr>
+    <tr>
+      <td>3.12.7</td>
+      <td>✅ Full support</td>
+      <td>🟢 Recommended</td>
+      <td>New projects, future-proofing</td>
+    </tr>
+    <tr>
+      <td>3.13.x</td>
+      <td>⚠️ Experimental</td>
+      <td>🟡 Advanced users only</td>
+      <td>Some packages may still lack full support</td>
+    </tr>
+  </tbody>
+</table>
 </div>
+
+<ul>
+  <li><strong>Recommended:</strong> Install Python 3.12.7 from <a href="https://www.python.org/downloads/">python.org</a></li>
+  <li><strong>Installation Tips:</strong>
+    <ul>
+      <li><strong>Windows:</strong> Use the installer and ensure <code>Add Python to PATH</code> is checked. Then restart the terminal.</li>
+      <li><strong>macOS:</strong> Use Homebrew: <code>brew install python@3.12</code>. Apple Silicon users should also run <code>softwareupdate --install-rosetta</code> to support some packages.</li>
+      <li><strong>Linux:</strong> Use <a href="https://github.com/pyenv/pyenv">pyenv</a> for managing multiple Python versions: <code>pyenv install 3.12.7</code></li>
+      <li><strong>Windows Developers:</strong> Consider using <a href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL2</a> to emulate a Linux-like dev environment, particularly helpful for Docker and package management.</li>
+    </ul>
+  </li>
+</ul>
+
+<pre><code># Verify Python is installed
+python --version  # or python3 --version
+# Expected output:
+# Python 3.12.7</code></pre>
+
+<h3>1.3 Install Git (Version Control)</h3>
+<ul>
+  <li><strong>Download:</strong> Visit <a href="https://git-scm.com/downloads">git-scm.com</a> and install Git for your platform.</li>
+  <li><strong>Initial setup:</strong>
+    <pre><code>git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"</code></pre>
+  </li>
+  <li><strong>Verify installation:</strong> Run <code>git --version</code> in your terminal.</li>
+</ul>
+</div>
+
 
 <div class="section" id="section2">
     <h2>2. Set Up Python in VS Code (Beginner)</h2>
@@ -998,46 +1004,9 @@ python --version
 which python</code></pre>
 </div>
 
-<div class="section" id="section19">
-    <h2>19. Changelog</h2>
-    <ul>
-        <li><strong>August 5, 2025 (MAJOR UPDATE - v3.0)</strong>:
-            <ul>
-                <li><strong>CRITICAL FIXES APPLIED</strong>:
-                    <ul>
-                        <li>Updated PyTorch to 2.7.0 with CUDA 12.8 support</li>
-                        <li>Fixed LangChain integration for 0.3.x compatibility with new import syntax</li>
-                        <li>Updated all package versions to August 2025 standards</li>
-                        <li>Resolved OpenAI API compatibility issues</li>
-                        <li>Added Python 3.13 compatibility verification</li>
-                    </ul>
-                </li>
-                <li><strong>NEW FEATURES</strong>:
-                    <ul>
-                        <li>Comprehensive version conflict resolution strategies</li>
-                        <li>Updated GPU compatibility matrix with Blackwell architecture support</li>
-                        <li>Enhanced troubleshooting section with specific error solutions</li>
-                        <li>Added package evolution warnings and version checking commands</li>
-                        <li>Improved FastAPI examples with proper error handling</li>
-                    </ul>
-                </li>
-                <li><strong>PACKAGE VERSION UPDATES</strong>:
-                    <ul>
-                        <li>PyTorch: 2.3.1 → 2.7.0 (CUDA 12.8)</li>
-                        <li>LangChain-OpenAI: 0.1.7 → 0.3.28 (breaking changes)</li>
-                        <li>NumPy: 1.26.4 → 2.3.2</li>
-                        <li>Pandas: 2.2.2 → 2.3.1</li>
-                        <li>Transformers: 4.41.2 → 4.53.2</li>
-                        <li>OpenAI: 1.35.7 → 1.54.3</li>
-                        <li>All other packages updated to latest stable versions</li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
-</div>
+
 <div class="section" id="section20">
-    <h2>20. Integrated Mini-Project: RAG Agent with a FastAPI Endpoint (Advanced)</h2>
+    <h2>19. Integrated Mini-Project: RAG Agent with a FastAPI Endpoint (Advanced)</h2>
     <p>This final example ties together several concepts from this guide into a single, functional application. We will build a simple Retrieval-Augmented Generation (RAG) API using <strong>FastAPI</strong>, <strong>LangChain</strong>, and <strong>ChromaDB</strong>.</p>
     <p><strong>What this project demonstrates:</strong></p>
     <ul>
@@ -1271,6 +1240,44 @@ async def query_agent(request: QueryRequest):
         </li>
     </ol>
     <p class="note"><strong>Production Tip:</strong> For public deployments, add authentication and rate limiting to your FastAPI endpoints. See <a href="https://fastapi.tiangolo.com/advanced/security/">FastAPI Security</a> for best practices.</p>
+</div>
+<div class="section" id="section19">
+    <h2>20. Changelog</h2>
+    <ul>
+        <li><strong>August 5, 2025 (MAJOR UPDATE - v3.0)</strong>:
+            <ul>
+                <li><strong>CRITICAL FIXES APPLIED</strong>:
+                    <ul>
+                        <li>Updated PyTorch to 2.7.0 with CUDA 12.8 support</li>
+                        <li>Fixed LangChain integration for 0.3.x compatibility with new import syntax</li>
+                        <li>Updated all package versions to August 2025 standards</li>
+                        <li>Resolved OpenAI API compatibility issues</li>
+                        <li>Added Python 3.13 compatibility verification</li>
+                    </ul>
+                </li>
+                <li><strong>NEW FEATURES</strong>:
+                    <ul>
+                        <li>Comprehensive version conflict resolution strategies</li>
+                        <li>Updated GPU compatibility matrix with Blackwell architecture support</li>
+                        <li>Enhanced troubleshooting section with specific error solutions</li>
+                        <li>Added package evolution warnings and version checking commands</li>
+                        <li>Improved FastAPI examples with proper error handling</li>
+                    </ul>
+                </li>
+                <li><strong>PACKAGE VERSION UPDATES</strong>:
+                    <ul>
+                        <li>PyTorch: 2.3.1 → 2.7.0 (CUDA 12.8)</li>
+                        <li>LangChain-OpenAI: 0.1.7 → 0.3.28 (breaking changes)</li>
+                        <li>NumPy: 1.26.4 → 2.3.2</li>
+                        <li>Pandas: 2.2.2 → 2.3.1</li>
+                        <li>Transformers: 4.41.2 → 4.53.2</li>
+                        <li>OpenAI: 1.35.7 → 1.54.3</li>
+                        <li>All other packages updated to latest stable versions</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
 </div>
 </body>
 </html>
