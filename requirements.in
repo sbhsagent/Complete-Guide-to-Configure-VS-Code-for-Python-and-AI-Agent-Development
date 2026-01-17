@@ -1,0 +1,29 @@
+# requirements.in - Updated August 2025
+# Core
+numpy~=2.3.2
+pandas~=2.3.1
+python-dotenv~=1.0.1
+pytest~=8.3.3
+
+# LangChain Ecosystem (v0.3.x compatible)
+langchain~=0.3.27
+langchain-openai~=0.3.28
+
+# PyTorch (CUDA 12.1 compatible)
+# NOTE: pip-tools does not support --index-url per line.
+#       Install torch separately after pip-sync, or use a constraints file.
+# torch==2.7.0 --index-url https://download.pytorch.org/whl/cu121
+
+# API and local models
+openai~=1.54.3
+ollama~=0.4.2
+
+# Vector DB
+chromadb~=0.5.20
+
+# FastAPI
+fastapi~=0.115.6
+uvicorn~=0.32.1
+
+# Optional: Add other frameworks like crewai or llama-index here
+# crewai~=0.83.5

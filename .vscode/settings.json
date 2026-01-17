@@ -1,0 +1,19 @@
+{
+    "python.defaultInterpreterPath": "./.venv/bin/python",
+    "python.formatting.provider": "black",
+    "editor.formatOnSave": true,
+    "python.linting.pylintEnabled": true,
+    "python.testing.pytestEnabled": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "files.autoSave": "afterDelay",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    }
+}
