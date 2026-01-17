@@ -1,0 +1,58 @@
+# Core AI/ML and Data Science (Updated August 2025)
+numpy==2.3.2
+pandas==2.3.1
+scikit-learn==1.5.2
+
+# PyTorch with CUDA 12.1 support
+torch==2.7.0
+torchvision==0.22.0
+torchaudio==2.7.0
+
+transformers==4.53.2
+sentence-transformers==3.3.1
+jupyter==1.1.1
+python-dotenv==1.0.1
+pytest==8.3.3
+
+# LangChain Ecosystem (Updated for v0.3.x compatibility)
+langchain==0.3.27
+langchain-community==0.3.5
+langchain-openai==0.3.28
+
+# Other AI Frameworks (Optional - updated versions)
+crewai==0.83.5
+pyautogen==0.4.3
+llama-index==0.12.8
+
+# API Clients and Utilities (Updated August 2025)
+openai==1.54.3
+anthropic==0.39.0
+google-generativeai==0.8.3
+huggingface_hub==0.26.2
+requests==2.32.3
+beautifulsoup4==4.12.3
+ollama==0.4.2
+chromadb==0.5.20
+faiss-cpu==1.9.0
+
+# FastAPI and related
+fastapi==0.115.6
+uvicorn==0.32.1
+pydantic==2.10.1
+slowapi==0.1.9
+
+# Experiment tracking
+mlflow==2.19.0
+
+# Code quality tools
+black==24.10.0
+isort==5.13.2
+ruff==0.8.4
+pre-commit==4.0.1
+
+# Security Tools
+safety==3.2.11
+pip-audit==2.8.0
+
+# Development tools
+ipykernel==6.29.5

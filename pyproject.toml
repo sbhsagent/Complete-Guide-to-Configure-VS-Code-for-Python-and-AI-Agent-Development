@@ -1,0 +1,31 @@
+# pyproject.toml
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "W", "I", "UP", "C"]
+ignore = ["E501"]
+target-version = "py312"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[project]
+name = "ai-agent-development"
+version = "1.0.0"
+description = "Complete Guide to Configure VS Code for Python and AI Agent Development"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    {name = "Stephen Hope", email = "sbhope@gmail.com"}
+]
