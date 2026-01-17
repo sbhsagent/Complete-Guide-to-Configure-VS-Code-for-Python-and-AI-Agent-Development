@@ -13,9 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY --chown=appuser:appuser . .
 
-# Add health check
+# Add health check (using Python instead of curl for slim image)
 HEALTHCHECK --interval=30s --timeout=3s \
-  CMD curl -f http://localhost:8000/health || exit 1
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" || exit 1
 
 # Switch to the non-privileged user
 USER appuser
